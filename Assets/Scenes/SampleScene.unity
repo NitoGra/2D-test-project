@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 755333619}
   - component: {fileID: 755333622}
   - component: {fileID: 755333623}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,9 +514,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _animator: {fileID: 755333622}
-  _jumpSpeed: 3
-  _groundDistance: 0.3
-  IsGrounded: 0
+  _jumpSpeed: 30
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!212 &755333621
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -646,7 +647,7 @@ GameObject:
   - component: {fileID: 783150796}
   - component: {fileID: 783150797}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GroundTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -729,8 +730,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 827349549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5258, y: -4.2, z: -0.0020247842}
-  m_LocalScale: {x: 20.29807, y: 0.508013, z: 1}
+  m_LocalPosition: {x: 0.31, y: -3.9626, z: -0.0020247842}
+  m_LocalScale: {x: 20.73042, y: 0.03327485, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1215209483}
