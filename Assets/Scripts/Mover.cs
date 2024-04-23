@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Mover : MonoBehaviour 
+public class Mover : MonoBehaviour
 {
 	private Rigidbody2D _rigidbody2D;
 

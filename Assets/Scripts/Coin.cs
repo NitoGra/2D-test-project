@@ -7,7 +7,7 @@ public class Coin : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if(collision.gameObject.GetComponent<PlayerAnimator>())
+		if (collision.gameObject.GetComponent<PlayerAnimator>())
 		{
 			_audio.Play();
 			Invoke(nameof(Die), _delay);
