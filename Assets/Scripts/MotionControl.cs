@@ -30,7 +30,7 @@ public class MotionControl : MonoBehaviour
 
 	private void Update()
 	{
-		bool _isGrounded = this._isGrounded;
+		_isGrounded = WasGrounded();
 
 		if (_isGrounded)
 		{

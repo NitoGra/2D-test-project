@@ -28,7 +28,7 @@ public class EnemyPatrol : MonoBehaviour
 
 	private void MakeNextPosition()
 	{
-		_index = ++_index % _wayPoints.Count == 0 ? 0 : _index++;
+		_index = ++_index % _wayPoints.Count;
 		_wayPoint = _wayPoints[_index];
 	}
 
