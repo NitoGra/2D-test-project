@@ -15,12 +15,12 @@ public class PlayerJumped : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_motionControl.PlayerJumped += PlayJump;
+		_motionControl.JumpKeyPressed += PlayJump;
 	}
 
 	private void OnDisable()
 	{
-		_motionControl.PlayerJumped -= PlayJump;
+		_motionControl.JumpKeyPressed -= PlayJump;
 	}
 
 	private void PlayJump()

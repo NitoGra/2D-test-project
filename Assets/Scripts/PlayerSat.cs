@@ -16,12 +16,12 @@ public class PlayerSat : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_motionControl.PlayerSat += PlaySit;
+		_motionControl.SitKeyPressed += PlaySit;
 	}
 
 	private void OnDisable()
 	{
-		_motionControl.PlayerSat -= PlaySit;
+		_motionControl.SitKeyPressed -= PlaySit;
 	}
 
 	private void PlaySit()

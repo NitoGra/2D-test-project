@@ -15,12 +15,12 @@ public class PlayerRan : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_motionControl.PlayerRan += PlayRun;
+		_motionControl.RunKeyPressed += PlayRun;
 	}
 
 	private void OnDisable()
 	{
-		_motionControl.PlayerRan -= PlayRun;
+		_motionControl.RunKeyPressed -= PlayRun;
 	}
 
 	private void PlayRun()

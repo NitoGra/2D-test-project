@@ -15,12 +15,12 @@ public class PlayerIdle : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_motionControl.PlayerIdle += PlayIdle;
+		_motionControl.IdleOrdered += PlayIdle;
 	}
 
 	private void OnDisable()
 	{
-		_motionControl.PlayerIdle -= PlayIdle;
+		_motionControl.IdleOrdered -= PlayIdle;
 	}
 
 	private void PlayIdle()

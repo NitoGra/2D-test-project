@@ -20,10 +20,10 @@ public class MotionControl : MonoBehaviour
 	private bool _isGrounded;
 	private bool _isJumped;
 
-	public event Action PlayerSat;
-	public event Action PlayerJumped;
-	public event Action PlayerRan;
-	public event Action PlayerIdle;
+	public event Action SitOrdered;
+	public event Action JumpOrdered;
+	public event Action RunOrdered;
+	public event Action IdleOrdered;
 
 	private void Start()
 	{
@@ -44,13 +44,13 @@ public class MotionControl : MonoBehaviour
 
 			if (Input.GetKey(SitKey))
 			{
-				PlayerSat?.Invoke();
+				SitOrdered?.Invoke();
 				return;
 			}
 		}
 		else
 		{
-			PlayerJumped?.Invoke();
+			JumpOrdered?.Invoke();
 		}
 
 		_moveVector.x = Input.GetAxis(Horizontal);
@@ -65,14 +65,14 @@ public class MotionControl : MonoBehaviour
 		}
 
 		if (_isGrounded && _moveVector.x != 0)
-			PlayerRan?.Invoke();
+			RunOrdered?.Invoke();
 
 		if (_moveVector.x > 0)
 			_spriteRenderer.flipX = false;
 		else if (_moveVector.x < 0)
 			_spriteRenderer.flipX = true;
 		else if (_isGrounded)
-			PlayerIdle?.Invoke();
+			IdleOrdered?.Invoke();
 
 		_mover.HorizontalMove(_moveVector.x * _speed);
 	}
