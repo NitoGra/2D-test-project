@@ -43,7 +43,7 @@ public class PlayerAnimator : MonoBehaviour
 		_animator.Play(Jump);
 	}
 
-	public void PlaySit()
+	private void PlaySit()
 	{
 		_animator.Play(Sit);
 	}
