@@ -69,4 +69,10 @@ public class MotionControl : MonoBehaviour
 	{
 		return Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _groundMask).Length > 0;
 	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.TryGetComponent<Coin>(out Coin coin))
+			coin.Taked();
+	}
 }

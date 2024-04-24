@@ -5,15 +5,12 @@ public class Coin : MonoBehaviour
 	[SerializeField] private AudioSource _audio;
 	[SerializeField] private float _delay;
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	public void Taked()
 	{
-		if (collision.gameObject.GetComponent<PlayerAnimator>())
-		{
-			_audio.Play();
-			Invoke(nameof(Die), _delay);
-		}
+		_audio.Play();
+		Invoke(nameof(Die), _delay);
 	}
-
+		
 	private void Die()
 	{
 		Destroy(gameObject);
