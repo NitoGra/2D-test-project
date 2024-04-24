@@ -18,7 +18,7 @@ public class CoinSpawner : MonoBehaviour
 	{
 		WaitForSeconds wait = new WaitForSeconds(delay);
 
-		for (int _coinCount = 0; _coinCount < _maxCoinCount; _coinCount++)
+		for (int coinCount = 0; coinCount < _maxCoinCount; coinCount++)
 		{
 			Rigidbody2D coin = Instantiate(_coinPrefab);
 			coin.transform.SetParent(transform);
