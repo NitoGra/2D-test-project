@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CoinSpawner : MonoBehaviour
@@ -20,6 +21,7 @@ public class CoinSpawner : MonoBehaviour
 		for (int _coinCount = 0; _coinCount < _maxCoinCount; _coinCount++)
 		{
 			Rigidbody2D coin = Instantiate(_coinPrefab);
+			coin.transform.SetParent(transform);
 			coin.transform.position = transform.position;
 			coin.AddForce(_force, ForceMode2D.Impulse);
 			yield return wait;

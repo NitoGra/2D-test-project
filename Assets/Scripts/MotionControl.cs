@@ -12,6 +12,7 @@ public class MotionControl : MonoBehaviour
 	[SerializeField] private float _jumpSpeed;
 	[SerializeField] private LayerMask _groundMask;
 	[SerializeField] private CircleCollider2D _groundTrigger;
+	[SerializeField] private AudioSource _coinSound;
 
 	private Mover _mover;
 	private Vector2 _moveVector;
@@ -84,6 +85,9 @@ public class MotionControl : MonoBehaviour
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.gameObject.TryGetComponent<Coin>(out Coin coin))
-			coin.Taked();
+		{
+			coin.PickUp();
+			_coinSound.Play();
+		}
 	}
 }
