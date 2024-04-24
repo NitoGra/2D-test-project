@@ -404,8 +404,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coinPrefab: {fileID: -7790543794974159537, guid: b6b8b1b267713e649b74f609493fe071, type: 3}
   _delay: 0.5
-  _maxCoinCount: 1
-  _force: {x: -1, y: 5}
+  _maxCoinCount: 2
+  _force: {x: 5, y: 5}
 --- !u!4 &649272167
 Transform:
   m_ObjectHideFlags: 0
@@ -1044,7 +1044,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1111468098}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -11.0337, y: 0.0304, z: -0.0020247842}
+  m_LocalPosition: {x: -10.51, y: 0.03, z: -0.0020247842}
   m_LocalScale: {x: 10.63109, y: 0.08068819, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -14,7 +14,6 @@ public class MotionControl : MonoBehaviour
 	[SerializeField] private float _jumpSpeed;
 	[SerializeField] private LayerMask _groundMask;
 
-	private PlayerAnimator _animator;
 	private Mover _mover;
 	private Vector2 _moveVector;
 	private CircleCollider2D _groundTrigger;
@@ -22,12 +21,15 @@ public class MotionControl : MonoBehaviour
 	private bool _isGrounded;
 
 	public event Action PlayerSat;
+	public event Action PlayerJumped;
+	public event Action PlayerRan;
+	public event Action PlayerIdle;
 
 	private void Start()
 	{
 		_groundTrigger = GetComponentInChildren<CircleCollider2D>();
 		_spriteRenderer = GetComponent<SpriteRenderer>();
-		_animator = GetComponent<PlayerAnimator>();
+		//_animator = GetComponent<PlayerAnimator>();
 		_mover = GetComponent<Mover>();
 	}
 
@@ -45,26 +47,25 @@ public class MotionControl : MonoBehaviour
 			if (Input.GetKey(SitKey))
 			{
 				PlayerSat?.Invoke();
-				//_animator.PlaySit();
 				return;
 			}
 		}
 		else
 		{
-			_animator.PlayJump();
+			PlayerJumped?.Invoke();
 		}
 
 		_moveVector.x = Input.GetAxis(Horizontal);
 
 		if (_isGrounded && _moveVector.x != 0)
-			_animator.PlayRun();
+			PlayerRan?.Invoke();
 
 		if (_moveVector.x > 0)
 			_spriteRenderer.flipX = false;
 		else if (_moveVector.x < 0)
 			_spriteRenderer.flipX = true;
 		else if (_isGrounded)
-			_animator.PlayIdle();
+			PlayerIdle?.Invoke();
 
 		_mover.HorizontalMove(_moveVector.x * _speed);
 	}
