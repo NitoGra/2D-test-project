@@ -10,9 +10,9 @@ public class Mover : MonoBehaviour
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 	}
 
-	public void HorizontalMove(float xSpeedOnRigidbody2D)
+	public void HorizontalMove(float xVelocity)
 	{
-		_rigidbody2D.velocity = new Vector2(xSpeedOnRigidbody2D, _rigidbody2D.velocity.y);
+		_rigidbody2D.velocity = new Vector2(xVelocity, _rigidbody2D.velocity.y);
 	}
 
 	public void ImpulseMove(Vector2 impulseDirection)

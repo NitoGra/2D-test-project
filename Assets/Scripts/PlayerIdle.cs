@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerIdle : MonoBehaviour
 {
-	private static readonly int Idle = Animator.StringToHash(nameof(Idle));
+	private readonly int Idle = Animator.StringToHash(nameof(Idle));
 
 	private MotionControl _motionControl;
 	private Animator _animator;

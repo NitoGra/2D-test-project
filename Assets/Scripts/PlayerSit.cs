@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerJumped : MonoBehaviour
+public class PlayerSit : MonoBehaviour
 {
-	private static readonly int Jump = Animator.StringToHash(nameof(Jump));
+	private readonly int Sit = Animator.StringToHash(nameof(Sit));
 
 	private MotionControl _motionControl;
 	private Animator _animator;
@@ -15,16 +15,16 @@ public class PlayerJumped : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_motionControl.JumpKeyPressed += PlayJump;
+		_motionControl.SitOrdered += PlaySit;
 	}
 
 	private void OnDisable()
 	{
-		_motionControl.JumpKeyPressed -= PlayJump;
+		_motionControl.SitOrdered -= PlaySit;
 	}
 
-	private void PlayJump()
+	private void PlaySit()
 	{
-		_animator.Play(Jump);
+		_animator.Play(Sit);
 	}
 }

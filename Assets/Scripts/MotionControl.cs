@@ -39,7 +39,7 @@ public class MotionControl : MonoBehaviour
 		{
 			if (Input.GetKeyDown(JumpKey))
 			{
-				_isJumped= true;
+				_isJumped = true;
 			}
 
 			if (Input.GetKey(SitKey))
@@ -58,7 +58,7 @@ public class MotionControl : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if(_isJumped)
+		if (_isJumped)
 		{
 			_mover.ImpulseMove(transform.up * _jumpSpeed);
 			_isJumped = false;

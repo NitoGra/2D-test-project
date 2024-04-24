@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
-public class PlayerSat : MonoBehaviour
+public class PlayerJump : MonoBehaviour
 {
-	private static readonly int Sit = Animator.StringToHash(nameof(Sit));
+	private readonly int Jump = Animator.StringToHash(nameof(Jump));
 
 	private MotionControl _motionControl;
 	private Animator _animator;
@@ -16,16 +15,16 @@ public class PlayerSat : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_motionControl.SitKeyPressed += PlaySit;
+		_motionControl.JumpOrdered += PlayJump;
 	}
 
 	private void OnDisable()
 	{
-		_motionControl.SitKeyPressed -= PlaySit;
+		_motionControl.JumpOrdered -= PlayJump;
 	}
 
-	private void PlaySit()
+	private void PlayJump()
 	{
-		_animator.Play(Sit);
+		_animator.Play(Jump);
 	}
 }

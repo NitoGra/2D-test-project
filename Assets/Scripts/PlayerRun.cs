@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerRan : MonoBehaviour
+public class PlayerRun : MonoBehaviour
 {
-	private static readonly int Run = Animator.StringToHash(nameof(Run));
+	private readonly int Run = Animator.StringToHash(nameof(Run));
 
 	private MotionControl _motionControl;
 	private Animator _animator;
@@ -15,12 +15,12 @@ public class PlayerRan : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_motionControl.RunKeyPressed += PlayRun;
+		_motionControl.RunOrdered += PlayRun;
 	}
 
 	private void OnDisable()
 	{
-		_motionControl.RunKeyPressed -= PlayRun;
+		_motionControl.RunOrdered -= PlayRun;
 	}
 
 	private void PlayRun()
