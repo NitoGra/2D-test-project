@@ -1,9 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(PlayerAnimator))]
-[RequireComponent(typeof(Mover))]
+[RequireComponent(typeof(Mover), typeof(SpriteRenderer))]
 public class MotionControl : MonoBehaviour
 {
 	private const string Horizontal = "Horizontal";
@@ -13,12 +11,13 @@ public class MotionControl : MonoBehaviour
 	[SerializeField] private float _speed;
 	[SerializeField] private float _jumpSpeed;
 	[SerializeField] private LayerMask _groundMask;
+	[SerializeField] private CircleCollider2D _groundTrigger;
 
 	private Mover _mover;
 	private Vector2 _moveVector;
-	private CircleCollider2D _groundTrigger;
 	private SpriteRenderer _spriteRenderer;
 	private bool _isGrounded;
+	private bool _isJumped;
 
 	public event Action PlayerSat;
 	public event Action PlayerJumped;
@@ -27,9 +26,7 @@ public class MotionControl : MonoBehaviour
 
 	private void Start()
 	{
-		_groundTrigger = GetComponentInChildren<CircleCollider2D>();
 		_spriteRenderer = GetComponent<SpriteRenderer>();
-		//_animator = GetComponent<PlayerAnimator>();
 		_mover = GetComponent<Mover>();
 	}
 
@@ -41,7 +38,7 @@ public class MotionControl : MonoBehaviour
 		{
 			if (Input.GetKeyDown(JumpKey))
 			{
-				_mover.ImpulseMove(transform.up * _jumpSpeed);
+				_isJumped= true;
 			}
 
 			if (Input.GetKey(SitKey))
@@ -56,6 +53,15 @@ public class MotionControl : MonoBehaviour
 		}
 
 		_moveVector.x = Input.GetAxis(Horizontal);
+	}
+
+	private void FixedUpdate()
+	{
+		if(_isJumped)
+		{
+			_mover.ImpulseMove(transform.up * _jumpSpeed);
+			_isJumped = false;
+		}
 
 		if (_isGrounded && _moveVector.x != 0)
 			PlayerRan?.Invoke();

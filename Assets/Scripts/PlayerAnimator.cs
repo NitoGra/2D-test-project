@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(MotionControl))]
+[RequireComponent(typeof(MotionControl), typeof(Animator))]
 public class PlayerAnimator : MonoBehaviour
 {
 	private PlayerSat _playerSat;

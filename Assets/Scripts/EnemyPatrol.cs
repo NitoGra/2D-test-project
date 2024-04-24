@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class EnemyPatrol : MonoBehaviour
@@ -34,10 +35,7 @@ public class EnemyPatrol : MonoBehaviour
 
 	private void RotateToTarget()
 	{
-		if (transform.position.x < _wayPoint.position.x)
-			_spriteRenderer.flipX = false;
-		else
-			_spriteRenderer.flipX = true;
+		_spriteRenderer.flipX = transform.position.x >= _wayPoint.position.x;
 	}
 
 	private void MoveToTargetWayPoint()
