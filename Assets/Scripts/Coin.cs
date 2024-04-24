@@ -10,7 +10,7 @@ public class Coin : MonoBehaviour
 		_audio.Play();
 		Invoke(nameof(Die), _delay);
 	}
-		
+
 	private void Die()
 	{
 		Destroy(gameObject);
