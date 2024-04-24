@@ -535,6 +535,7 @@ MonoBehaviour:
   _groundMask:
     serializedVersion: 2
     m_Bits: 256
+  _groundTrigger: {fileID: 783150797}
 --- !u!212 &755333621
 SpriteRenderer:
   m_ObjectHideFlags: 0
