@@ -1,22 +1,20 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class EnemyAnimator : MonoBehaviour
 {
 	[SerializeField] private Animator _animator;
 
-	public static class Params
+	private static readonly int EnemyDead = Animator.StringToHash(nameof(EnemyDead));
+	private static readonly int EnemyRun = Animator.StringToHash(nameof(EnemyRun));
+
+	public void PlayRun()
 	{
-		public static readonly int EnemyDead = Animator.StringToHash(nameof(EnemyDead));
-		public static readonly int EnemyRun = Animator.StringToHash(nameof(EnemyRun));
+		_animator.Play(EnemyRun);
 	}
 
-	public void Run()
+	public void PlayDead()
 	{
-		_animator.Play(Params.EnemyRun);
-	}
-
-	public void Dead()
-	{
-		_animator.Play(Params.EnemyDead);
+		_animator.Play(EnemyDead);
 	}
 }

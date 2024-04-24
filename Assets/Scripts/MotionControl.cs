@@ -1,5 +1,8 @@
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(PlayerAnimator))]
+[RequireComponent(typeof(Mover))]
 public class MotionControl : MonoBehaviour
 {
 	private const string Horizontal = "Horizontal";
