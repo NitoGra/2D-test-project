@@ -18,8 +18,7 @@ public class MotionControl : MonoBehaviour
 	private Vector2 _moveVector;
 	private CircleCollider2D _groundTrigger;
 	private SpriteRenderer _spriteRenderer;
-
-	public bool IsGrounded => WasGrounded();
+	private bool _isGrounded;
 
 	private void Start()
 	{
@@ -31,9 +30,9 @@ public class MotionControl : MonoBehaviour
 
 	private void Update()
 	{
-		bool isGrounded = IsGrounded;
+		bool _isGrounded = this._isGrounded;
 
-		if (isGrounded)
+		if (_isGrounded)
 		{
 			if (Input.GetKeyDown(JumpKey))
 			{
@@ -53,14 +52,14 @@ public class MotionControl : MonoBehaviour
 
 		_moveVector.x = Input.GetAxis(Horizontal);
 
-		if (isGrounded && _moveVector.x != 0)
+		if (_isGrounded && _moveVector.x != 0)
 			_animator.PlayRun();
 
 		if (_moveVector.x > 0)
 			_spriteRenderer.flipX = false;
 		else if (_moveVector.x < 0)
 			_spriteRenderer.flipX = true;
-		else if (isGrounded)
+		else if (_isGrounded)
 			_animator.PlayIdle();
 
 		_mover.HorizontalMove(_moveVector.x * _speed);

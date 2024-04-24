@@ -3,11 +3,12 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimator : MonoBehaviour
 {
-	private Animator Animator;
 	private static readonly int Jump = Animator.StringToHash(nameof(Jump));
 	private static readonly int Run = Animator.StringToHash(nameof(Run));
 	private static readonly int Idle = Animator.StringToHash(nameof(Idle));
 	private static readonly int Sit = Animator.StringToHash(nameof(Sit));
+
+	private Animator Animator;
 
 	public void Awake()
 	{
