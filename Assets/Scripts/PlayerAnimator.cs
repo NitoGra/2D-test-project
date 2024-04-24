@@ -2,38 +2,34 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
-	public Animator Animator;
-
-	public static class Params
-	{
-		public static readonly int Jump = Animator.StringToHash(nameof(Jump));
-		public static readonly int Run = Animator.StringToHash(nameof(Run));
-		public static readonly int Idle = Animator.StringToHash(nameof(Idle));
-		public static readonly int Sit = Animator.StringToHash(nameof(Sit));
-	}
+	private Animator Animator;
+	private static readonly int Jump = Animator.StringToHash(nameof(Jump));
+	private static readonly int Run = Animator.StringToHash(nameof(Run));
+	private static readonly int Idle = Animator.StringToHash(nameof(Idle));
+	private static readonly int Sit = Animator.StringToHash(nameof(Sit));
 
 	public void Awake()
 	{
 		Animator = GetComponent<Animator>();
 	}
 
-	public void Idle()
+	public void PlayIdle()
 	{
-		Animator.Play(Params.Idle);
+		Animator.Play(Idle);
 	}
 
-	public void Run()
+	public void PlayRun()
 	{
-		Animator.Play(Params.Run);
+		Animator.Play(Run);
 	}
 
-	public void Jump()
+	public void PlayJump()
 	{
-		Animator.Play(Params.Jump);
+		Animator.Play(Jump);
 	}
 
-	public void Sit()
+	public void PlaySit()
 	{
-		Animator.Play(Params.Sit);
+		Animator.Play(Sit);
 	}
 }

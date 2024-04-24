@@ -39,26 +39,26 @@ public class MotionControl : MonoBehaviour
 
 			if (Input.GetKey(SitKey))
 			{
-				_animator.Sit();
+				_animator.PlaySit();
 				return;
 			}
 		}
 		else
 		{
-			_animator.Jump();
+			_animator.PlayJump();
 		}
 
 		_moveVector.x = Input.GetAxis(Horizontal);
 
 		if (isGrounded && _moveVector.x != 0)
-			_animator.Run();
+			_animator.PlayRun();
 
 		if (_moveVector.x > 0)
 			_spriteRenderer.flipX = false;
 		else if (_moveVector.x < 0)
 			_spriteRenderer.flipX = true;
 		else if (isGrounded)
-			_animator.Idle();
+			_animator.PlayIdle();
 
 		_mover.HorizontalMove(_moveVector.x * _speed);
 	}
