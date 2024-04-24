@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerRun : MonoBehaviour
+public class SitMove : MonoBehaviour
 {
-	private readonly int Run = Animator.StringToHash(nameof(Run));
+	private readonly int Sit = Animator.StringToHash(nameof(Sit));
 
 	private MotionControl _motionControl;
 	private Animator _animator;
@@ -15,16 +15,16 @@ public class PlayerRun : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_motionControl.RunOrdered += PlayRun;
+		_motionControl.SitOrdered += PlaySit;
 	}
 
 	private void OnDisable()
 	{
-		_motionControl.RunOrdered -= PlayRun;
+		_motionControl.SitOrdered -= PlaySit;
 	}
 
-	private void PlayRun()
+	private void PlaySit()
 	{
-		_animator.Play(Run);
+		_animator.Play(Sit);
 	}
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerIdle : MonoBehaviour
+public class IdleMove : MonoBehaviour
 {
 	private readonly int Idle = Animator.StringToHash(nameof(Idle));
 

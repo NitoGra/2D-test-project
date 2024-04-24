@@ -3,16 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(MotionControl), typeof(Animator))]
 public class PlayerAnimator : MonoBehaviour
 {
-	private PlayerSit _playerSat;
-	private PlayerIdle _playerIdle;
-	private PlayerJump _playerJumped;
-	private PlayerRun _playerRan;
+	private SitMove _playerSit;
+	private IdleMove _playerIdle;
+	private JumpMove _playerJump;
+	private RunMove _playerRun;
 
 	public void Awake()
 	{
-		_playerSat = gameObject.AddComponent<PlayerSit>();
-		_playerIdle = gameObject.AddComponent<PlayerIdle>();
-		_playerJumped = gameObject.AddComponent<PlayerJump>();
-		_playerRan = gameObject.AddComponent<PlayerRun>();
+		_playerSit = gameObject.AddComponent<SitMove>();
+		_playerIdle = gameObject.AddComponent<IdleMove>();
+		_playerJump = gameObject.AddComponent<JumpMove>();
+		_playerRun = gameObject.AddComponent<RunMove>();
 	}
 }

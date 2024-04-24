@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerJump : MonoBehaviour
+public class JumpMove : MonoBehaviour
 {
 	private readonly int Jump = Animator.StringToHash(nameof(Jump));
 
