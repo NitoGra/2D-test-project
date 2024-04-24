@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(MotionControl))]
 public class PlayerAnimator : MonoBehaviour
 {
 	private static readonly int Jump = Animator.StringToHash(nameof(Jump));
@@ -8,30 +9,42 @@ public class PlayerAnimator : MonoBehaviour
 	private static readonly int Idle = Animator.StringToHash(nameof(Idle));
 	private static readonly int Sit = Animator.StringToHash(nameof(Sit));
 
-	private Animator Animator;
+	private Animator _animator;
+	private MotionControl _motionControl;
 
 	public void Awake()
 	{
-		Animator = GetComponent<Animator>();
+		_animator = GetComponent<Animator>();
+		_motionControl = GetComponent<MotionControl>();
+	}
+
+	private void OnEnable()
+	{
+		_motionControl.PlayerSat += PlaySit;
+	}
+
+	private void OnDisable()
+	{
+		_motionControl.PlayerSat -= PlaySit;
 	}
 
 	public void PlayIdle()
 	{
-		Animator.Play(Idle);
+		_animator.Play(Idle);
 	}
 
 	public void PlayRun()
 	{
-		Animator.Play(Run);
+		_animator.Play(Run);
 	}
 
 	public void PlayJump()
 	{
-		Animator.Play(Jump);
+		_animator.Play(Jump);
 	}
 
 	public void PlaySit()
 	{
-		Animator.Play(Sit);
+		_animator.Play(Sit);
 	}
 }

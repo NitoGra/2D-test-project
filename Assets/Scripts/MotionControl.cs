@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -20,6 +21,8 @@ public class MotionControl : MonoBehaviour
 	private SpriteRenderer _spriteRenderer;
 	private bool _isGrounded;
 
+	public event Action PlayerSat;
+
 	private void Start()
 	{
 		_groundTrigger = GetComponentInChildren<CircleCollider2D>();
@@ -41,7 +44,8 @@ public class MotionControl : MonoBehaviour
 
 			if (Input.GetKey(SitKey))
 			{
-				_animator.PlaySit();
+				PlayerSat?.Invoke();
+				//_animator.PlaySit();
 				return;
 			}
 		}
