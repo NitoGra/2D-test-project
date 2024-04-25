@@ -7,8 +7,12 @@ public class MotionControl : MonoBehaviour
 	private const string Horizontal = "Horizontal";
 	private const KeyCode JumpKey = KeyCode.W;
 	private const KeyCode SitKey = KeyCode.S;
+	private const float MinSpeed = 1.0f;
+	private const float MaxSpeed = 100.0f;
 
+	[Range(MinSpeed, MaxSpeed)]
 	[SerializeField] private float _speed;
+	[SerializeField] private float _speedMultiplier;
 	[SerializeField] private float _jumpSpeed;
 	[SerializeField] private LayerMask _groundMask;
 	[SerializeField] private CircleCollider2D _groundTrigger;
@@ -18,7 +22,7 @@ public class MotionControl : MonoBehaviour
 	private Mover _mover;
 	private Vector2 _moveVector;
 	private bool _isGrounded;
-	private bool _isSit;
+	private bool _canMoving;
 
 	public event Action SitOrdered;
 	public event Action JumpOrdered;
@@ -35,52 +39,51 @@ public class MotionControl : MonoBehaviour
 	{
 		_faceFliper.Flip(_moveVector.x);
 		_isGrounded = WasGrounded();
+		_canMoving = true;
 
-		if (_isGrounded)
-		{
-			if (Input.GetKeyDown(JumpKey))
-			{
-				_mover.ImpulseMove(transform.up * _jumpSpeed);
-			}
-
-			if (Input.GetKey(SitKey))
-			{
-				SitOrdered?.Invoke();
-				return;
-			}
-		}
-		else
+		if (_isGrounded == false)
 		{
 			JumpOrdered?.Invoke();
+			return;
 		}
 
-		_moveVector.x = Input.GetAxis(Horizontal);
+		Jump();
 
-		if (_isGrounded)
-			if (_moveVector.x != 0)
-				RunOrdered?.Invoke();
-			else
-				IdleOrdered?.Invoke();
+		if (TrySit() == false)
+			return;
 
-		_mover.HorizontalMove(_moveVector * _speed);
+		if (_moveVector.x != 0)
+			RunOrdered?.Invoke();
+		else
+			IdleOrdered?.Invoke();
 	}
-	/*
+
+	private bool TrySit()
+	{
+		if (Input.GetKey(SitKey))
+		{
+			SitOrdered?.Invoke();
+			_canMoving = false;
+		}
+
+		return _canMoving;
+	}
+
+	private void Jump()
+	{
+		if (Input.GetKeyDown(JumpKey))
+		{
+			_mover.ImpulseMove(transform.up * _jumpSpeed);
+		}
+	}
+
 	private void FixedUpdate()
 	{
-		if (_isGrounded)
-			if (_moveVector.x != 0)
-				RunOrdered?.Invoke();
-			else
-				IdleOrdered?.Invoke();
+		_moveVector.x = Input.GetAxis(Horizontal);
 
-		_mover.HorizontalMove(_moveVector.x * _speed);
-	}*/
-
-	/*
-	if (_moveVector.x > 0)
-		_spriteRenderer.flipX = false;
-	else if (_moveVector.x < 0)
-		_spriteRenderer.flipX = true;*/
+		if (_canMoving)
+			_mover.HorizontalMove(_moveVector * _speed * _speedMultiplier);
+	}
 
 	private bool WasGrounded()
 	{

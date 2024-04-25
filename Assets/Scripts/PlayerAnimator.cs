@@ -14,16 +14,16 @@ public class PlayerAnimator : MonoBehaviour
 	private void OnEnable()
 	{
 		_motionControl.JumpOrdered += PlayJump;
-		_motionControl.RunOrdered += PlayRun;
 		_motionControl.IdleOrdered += PlayIdle;
+		_motionControl.RunOrdered += PlayRun;
 		_motionControl.SitOrdered += PlaySit;
 	}
 
 	private void OnDisable()
 	{
 		_motionControl.JumpOrdered -= PlayJump;
-		_motionControl.RunOrdered -= PlayRun;
 		_motionControl.IdleOrdered -= PlayIdle;
+		_motionControl.RunOrdered -= PlayRun;
 		_motionControl.SitOrdered -= PlaySit;
 	}
 
