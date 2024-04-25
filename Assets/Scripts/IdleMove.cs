@@ -1,9 +1,9 @@
 using UnityEngine;
 
 public class IdleMove : MonoBehaviour
-{
+{/*
 	private readonly int Idle = Animator.StringToHash(nameof(Idle));
-
+	private readonly int Jump = Animator.StringToHash(nameof(Jump));
 	private MotionControl _motionControl;
 	private Animator _animator;
 
@@ -26,5 +26,5 @@ public class IdleMove : MonoBehaviour
 	private void PlayIdle()
 	{
 		_animator.Play(Idle);
-	}
+	}*/
 }

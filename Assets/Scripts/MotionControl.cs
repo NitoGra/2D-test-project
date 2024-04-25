@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Mover), typeof(SpriteRenderer))]
+[RequireComponent(typeof(Mover), typeof(SpriteRenderer), typeof(FaceFliper))]
 public class MotionControl : MonoBehaviour
 {
 	private const string Horizontal = "Horizontal";
@@ -14,11 +14,11 @@ public class MotionControl : MonoBehaviour
 	[SerializeField] private CircleCollider2D _groundTrigger;
 	[SerializeField] private AudioSource _coinSound;
 
+	private FaceFliper _faceFliper;
 	private Mover _mover;
 	private Vector2 _moveVector;
-	private SpriteRenderer _spriteRenderer;
 	private bool _isGrounded;
-	private bool _isJumped;
+	private bool _isSit;
 
 	public event Action SitOrdered;
 	public event Action JumpOrdered;
@@ -27,19 +27,20 @@ public class MotionControl : MonoBehaviour
 
 	private void Start()
 	{
-		_spriteRenderer = GetComponent<SpriteRenderer>();
+		_faceFliper = GetComponent<FaceFliper>();
 		_mover = GetComponent<Mover>();
 	}
 
 	private void Update()
 	{
+		_faceFliper.Flip(_moveVector.x);
 		_isGrounded = WasGrounded();
 
 		if (_isGrounded)
 		{
 			if (Input.GetKeyDown(JumpKey))
 			{
-				_isJumped = true;
+				_mover.ImpulseMove(transform.up * _jumpSpeed);
 			}
 
 			if (Input.GetKey(SitKey))
@@ -54,35 +55,39 @@ public class MotionControl : MonoBehaviour
 		}
 
 		_moveVector.x = Input.GetAxis(Horizontal);
-	}
 
+		if (_isGrounded)
+			if (_moveVector.x != 0)
+				RunOrdered?.Invoke();
+			else
+				IdleOrdered?.Invoke();
+
+		_mover.HorizontalMove(_moveVector * _speed);
+	}
+	/*
 	private void FixedUpdate()
 	{
-		if (_isJumped)
-		{
-			_mover.ImpulseMove(transform.up * _jumpSpeed);
-			_isJumped = false;
-		}
-
-		if (_isGrounded && _moveVector.x != 0)
-			RunOrdered?.Invoke();
-
-		if (_moveVector.x > 0)
-			_spriteRenderer.flipX = false;
-		else if (_moveVector.x < 0)
-			_spriteRenderer.flipX = true;
-		else if (_isGrounded)
-			IdleOrdered?.Invoke();
+		if (_isGrounded)
+			if (_moveVector.x != 0)
+				RunOrdered?.Invoke();
+			else
+				IdleOrdered?.Invoke();
 
 		_mover.HorizontalMove(_moveVector.x * _speed);
-	}
+	}*/
+
+	/*
+	if (_moveVector.x > 0)
+		_spriteRenderer.flipX = false;
+	else if (_moveVector.x < 0)
+		_spriteRenderer.flipX = true;*/
 
 	private bool WasGrounded()
 	{
 		return Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _groundMask).Length > 0;
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.TryGetComponent<Coin>(out Coin coin))
 		{

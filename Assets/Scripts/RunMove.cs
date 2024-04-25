@@ -1,9 +1,10 @@
 using UnityEngine;
 
 public class RunMove : MonoBehaviour
-{
+{/*
 	private readonly int Run = Animator.StringToHash(nameof(Run));
-
+	private readonly int Idle = Animator.StringToHash(nameof(Idle));
+	private readonly int Jump = Animator.StringToHash(nameof(Jump));
 	private MotionControl _motionControl;
 	private Animator _animator;
 
@@ -26,5 +27,5 @@ public class RunMove : MonoBehaviour
 	private void PlayRun()
 	{
 		_animator.Play(Run);
-	}
+	}*/
 }

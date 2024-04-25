@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class JumpMove : MonoBehaviour
-{
+{/*
 	private readonly int Jump = Animator.StringToHash(nameof(Jump));
 
 	private MotionControl _motionControl;
@@ -26,5 +26,5 @@ public class JumpMove : MonoBehaviour
 	private void PlayJump()
 	{
 		_animator.Play(Jump);
-	}
+	}*/
 }
