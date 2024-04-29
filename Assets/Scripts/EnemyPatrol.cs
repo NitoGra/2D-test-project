@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(SpriteRenderer), typeof(FaceFliper))]
 public class EnemyPatrol : MonoBehaviour
 {
 	[SerializeField] private List<Transform> _wayPoints;
@@ -9,11 +9,11 @@ public class EnemyPatrol : MonoBehaviour
 
 	private int _index;
 	private Transform _wayPoint;
-	private SpriteRenderer _spriteRenderer;
+	private FaceFliper _faceFliper;
 
 	private void Start()
 	{
-		_spriteRenderer = GetComponent<SpriteRenderer>();
+		_faceFliper = GetComponent<FaceFliper>();
 		_index = 0;
 		_wayPoint = _wayPoints[_index];
 	}
@@ -22,7 +22,7 @@ public class EnemyPatrol : MonoBehaviour
 	{
 		MoveToTargetWayPoint();
 
-		if (transform.position == _wayPoint.position)
+		if (transform.position.x == _wayPoint.position.x)
 			MakeNextPosition();
 	}
 
@@ -34,12 +34,14 @@ public class EnemyPatrol : MonoBehaviour
 
 	private void RotateToTarget()
 	{
-		_spriteRenderer.flipX = transform.position.x >= _wayPoint.position.x;
+		_faceFliper.Flip(_wayPoint.position.x - transform.position.x);
 	}
 
 	private void MoveToTargetWayPoint()
 	{
 		RotateToTarget();
-		transform.position = Vector3.MoveTowards(transform.position, _wayPoint.position, _speed * Time.deltaTime);
+
+		Vector2 target = new Vector2(_wayPoint.position.x, transform.position.y);
+		transform.position = Vector2.MoveTowards(transform.position, target, _speed * Time.deltaTime);
 	}
 }
