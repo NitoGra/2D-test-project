@@ -1530,6 +1530,10 @@ MonoBehaviour:
   - {fileID: 1877673431}
   - {fileID: 678243442}
   _speed: 6
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _viewingDistance: 6
 --- !u!50 &1136863714
 Rigidbody2D:
   serializedVersion: 4
@@ -1615,6 +1619,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1136863711}
+  _enemyPatrol: {fileID: 1136863713}
+  _enemyHealth: {fileID: 1136863717}
+  _enemyAttack: {fileID: 1136863719}
 --- !u!114 &1136863717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1628,7 +1635,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 10
-  _enemyAnimator: {fileID: 1136863716}
 --- !u!114 &1136863718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1656,11 +1662,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 2
   _attackCollider: {fileID: 1198135170}
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  _punchForce: 1
-  _punchUpForce: 1
 --- !u!1 &1198135168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,14 +1688,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1198135168}
-  m_LocalRotation: {x: -0, y: -0, z: -0.6359159, w: 0.7717584}
-  m_LocalPosition: {x: 0.09, y: 1.24, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.6340559, w: 0.7732872}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1.0942308, y: 1.7, z: 1.9230769}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1136863712}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -78.976}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -78.7}
 --- !u!60 &1198135170
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1790,7 +1791,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!212 &1198135172
 SpriteRenderer:
   m_ObjectHideFlags: 0

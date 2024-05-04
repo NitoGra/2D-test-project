@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
 	[SerializeField] private int _health;
-	[SerializeField] private EnemyAnimator _enemyAnimator;
+
+	public event Action EnemyDeadOrdered;
 
 	public void TakeDamage(int damage)
 	{
@@ -11,7 +13,7 @@ public class EnemyHealth : MonoBehaviour
 
 		if (_health <= 0)
 		{
-			_enemyAnimator.PlayDead();
+			EnemyDeadOrdered?.Invoke();
 		}
 	}
 

@@ -1,25 +1,44 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator), typeof(EnemyPatrol), typeof(EnemyHealth))]
 public class EnemyAnimator : MonoBehaviour
 {
 	[SerializeField] private Animator _animator;
 
 	private static readonly int EnemyDead = Animator.StringToHash(nameof(EnemyDead));
-	private static readonly int EnemyRun = Animator.StringToHash(nameof(EnemyRun));
+	private static readonly int EnemyWalk = Animator.StringToHash(nameof(EnemyWalk));
 	private static readonly int EnemyAttack = Animator.StringToHash(nameof(EnemyAttack));
 
-	public void PlayRun()
+	[SerializeField] private EnemyPatrol _enemyPatrol;
+	[SerializeField] private EnemyHealth _enemyHealth;
+	[SerializeField] private EnemyAttack _enemyAttack;
+
+	private void OnEnable()
 	{
-		_animator.Play(EnemyRun);
+		_enemyAttack.EnemyWalkOrdered += PlayWalk;
+		_enemyHealth.EnemyDeadOrdered += PlayDead;
+		_enemyPatrol.EnemyAttackOrdered += PlayAttack;
 	}
 
-	public void PlayDead()
+	private void OnDisable()
+	{
+		_enemyAttack.EnemyWalkOrdered -= PlayWalk;
+		_enemyHealth.EnemyDeadOrdered -= PlayDead;
+		_enemyPatrol.EnemyAttackOrdered -= PlayAttack;
+	}
+	
+	private void PlayWalk()
+	{
+		_animator.Play(EnemyWalk);
+	}
+
+	private void PlayDead()
 	{
 		_animator.Play(EnemyDead);
 	}
 
-	public void PlayAttack()
+	private void PlayAttack()
 	{
 		_animator.Play(EnemyAttack);
 	}
