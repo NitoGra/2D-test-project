@@ -10,16 +10,19 @@ public class PlayerAnimator : MonoBehaviour
 	private readonly int Jump = Animator.StringToHash(nameof(Jump));
 	private readonly int Attack = Animator.StringToHash(nameof(Attack));
 	private readonly int Dead = Animator.StringToHash(nameof(Dead));
+	private readonly int GetDamage = Animator.StringToHash(nameof(GetDamage));
 
 	[SerializeField] private MotionControl _motionControl;
 	[SerializeField] private Animator _animator;
 	[SerializeField] private PlayerHealth _playerHealth;
+	[SerializeField] private float _deathDelay;
 
 	private void OnEnable()
 	{
-		_playerHealth.DeadOrdered += PlayDead;
 		_motionControl.JumpOrdered += PlayJump;
 		_motionControl.IdleOrdered += PlayIdle;
+		_playerHealth.DeadOrdered += PlayDead;
+		_playerHealth.DamageTakeOrderd += PlayDamage;
 		_motionControl.RunOrdered += PlayRun;
 		_motionControl.SitOrdered += PlaySit;
 		_motionControl.AttackOrdered += PlayAttack;
@@ -30,6 +33,7 @@ public class PlayerAnimator : MonoBehaviour
 		_motionControl.JumpOrdered -= PlayJump;
 		_motionControl.IdleOrdered -= PlayIdle;
 		_playerHealth.DeadOrdered -= PlayDead;
+		_playerHealth.DamageTakeOrderd -= PlayDamage;
 		_motionControl.RunOrdered -= PlayRun;
 		_motionControl.SitOrdered -= PlaySit;
 		_motionControl.AttackOrdered -= PlayAttack;
@@ -42,9 +46,13 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlayDead()
 	{
-		float deathDelay = 1.5f;
-		Invoke(nameof(StartDead), deathDelay);
+		Invoke(nameof(StartDead), _deathDelay);
 		_animator.Play(Dead);
+	}
+
+	private void PlayDamage()
+	{
+		_animator.Play(GetDamage);
 	}
 
 	private void PlaySit()

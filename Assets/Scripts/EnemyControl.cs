@@ -26,6 +26,7 @@ public class EnemyControl : MonoBehaviour
 
 	private FaceFliper _faceFliper;
 	private GameObject _target;
+	private Vector2 _lastTargetPosition;
 	private Coroutine _targetLose;
 
 	public event Action EnemyAttackOrdered;
@@ -93,13 +94,18 @@ public class EnemyControl : MonoBehaviour
 
 		if (_target != null)
 		{
+			_lastTargetPosition = _target.transform.position;
+
 			if (_timerToAttack > _attackDelay)
 			{
-				_timerToAttack = 0;
 				float distance = Vector2.Distance(_target.transform.position, transform.position);
 
 				if (distance <= _attackDistance)
+				{
+					RotateToTarget(_target.transform.position);
 					EnemyAttackOrdered?.Invoke();
+					_timerToAttack = 0;
+				}
 			}
 
 			if (_targetLose == null)
@@ -141,8 +147,8 @@ public class EnemyControl : MonoBehaviour
 
 	private void MoveToTarget()
 	{
-		Vector2 target = new Vector2(_target.transform.position.x + _huntDistance, transform.position.y);
-		RotateToTarget(target);
+		RotateToTarget(_target.transform.position);
+		Vector2 target = new Vector2(_lastTargetPosition.x + _huntDistance, transform.position.y);
 		transform.position = Vector2.MoveTowards(transform.position, target, _speed * Time.deltaTime);
 	}
 
@@ -151,8 +157,7 @@ public class EnemyControl : MonoBehaviour
 		while (_secondsHuntDelay > _secondsHuntCount)
 		{
 			_secondsHuntCount++;
-			int rangeHuntDistance = 4;
-			_huntDistance = UnityEngine.Random.Range(rangeHuntDistance/2, rangeHuntDistance);
+			_huntDistance = -UnityEngine.Random.Range(0, (int)_attackDistance);
 			yield return new WaitForSecondsRealtime(1.0f);
 		}
 

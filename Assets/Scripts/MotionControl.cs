@@ -20,8 +20,16 @@ public class MotionControl : MonoBehaviour
 	[SerializeField] private LayerMask _groundMask;
 	[SerializeField] private LayerMask _enemyMask;
 	[SerializeField] private CircleCollider2D _groundTrigger;
-	[SerializeField] private AudioSource _coinSound;
 	[SerializeField] private PlayerHealth _playerHealth;
+
+	[SerializeField] private AudioSource _audio;
+	[SerializeField] private AudioClip _medicBagSound;
+	[SerializeField] private AudioClip _coinSound;
+	[SerializeField] private AudioClip _punchSound;
+	[SerializeField] private AudioClip _damageSound;
+	[SerializeField] private AudioClip _deadSound;
+	private float _damageVolume = 0.5f;
+	private float _normalVolume = 1;
 
 	private FaceFliper _faceFliper;
 	private Mover _mover;
@@ -30,6 +38,9 @@ public class MotionControl : MonoBehaviour
 	private bool _isGrounded;
 	private bool _canMoving;
 	private bool _isIAlive = true;
+	private bool _isIAnimate = true;
+	private int _medicBagHealCount = 2;
+	private float _damageDelay = 1f;
 
 	public event Action SitOrdered;
 	public event Action JumpOrdered;
@@ -62,18 +73,25 @@ public class MotionControl : MonoBehaviour
 			return;
 		}
 
-		if (TryAttack() == false)
+		Jump();
+
+		if (_isIAnimate == false)
 			return;
 
-		Jump();
+		if (TryAttack() == false)
+			return;
 
 		if (TrySit() == false)
 			return;
 
 		if (_moveVector.x != 0)
+		{
 			RunOrdered?.Invoke();
+		}
 		else
+		{
 			IdleOrdered?.Invoke();
+		}
 	}
 
 	private void FixedUpdate()
@@ -81,16 +99,20 @@ public class MotionControl : MonoBehaviour
 		_moveVector.x = Input.GetAxis(Horizontal);
 
 		if (_canMoving)
+		{
 			_mover.HorizontalMove(_moveVector * _speed * _speedMultiplier);
+		}
 	}
 
 	private void OnEnable()
 	{
+		_playerHealth.DamageTakeOrderd += Damage;
 		_playerHealth.DeadOrdered += Dead;
 	}
 
 	private void OnDisable()
 	{
+		_playerHealth.DamageTakeOrderd += Damage;
 		_playerHealth.DeadOrdered -= Dead;
 	}
 
@@ -99,7 +121,15 @@ public class MotionControl : MonoBehaviour
 		if (collision.gameObject.TryGetComponent<Coin>(out Coin coin))
 		{
 			coin.PickUp();
-			_coinSound.Play();
+			_audio.clip = _coinSound;
+			_audio.Play();
+		}
+		else if (collision.gameObject.TryGetComponent<MedicBag>(out MedicBag medicBag))
+		{
+			medicBag.PickUp();
+			_audio.clip = _medicBagSound;
+			_audio.Play();
+			_playerHealth.Healing(_medicBagHealCount);
 		}
 	}
 
@@ -110,6 +140,9 @@ public class MotionControl : MonoBehaviour
 			AttackOrdered?.Invoke();
 			_canMoving = false;
 			_isAttack = true;
+
+			_audio.clip = _punchSound;
+			_audio.Play();
 		}
 
 		return _canMoving;
@@ -149,7 +182,27 @@ public class MotionControl : MonoBehaviour
 
 	private void Dead()
 	{
+		_audio.clip = _deadSound;
+		_audio.Play();
+
 		_isIAlive = false;
-		_canMoving= false;
+		_canMoving = false;
+	}
+
+	private void Damage()
+	{
+		_isIAnimate = false;
+		_canMoving = true;
+		_isAttack = false;
+		_audio.clip = _damageSound;
+		_audio.volume = _damageVolume;
+		_audio.Play();
+		Invoke(nameof(NormalState), _damageDelay);
+	}
+
+	private void NormalState()
+	{
+		_audio.volume = _normalVolume;
+		_isIAnimate = true;
 	}
 }
