@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover), typeof(SpriteRenderer), typeof(FaceFliper))]
@@ -19,8 +18,10 @@ public class MotionControl : MonoBehaviour
 	[Range(MinSpeed, MaxSpeed)]
 	[SerializeField] private float _jumpSpeed;
 	[SerializeField] private LayerMask _groundMask;
+	[SerializeField] private LayerMask _enemyMask;
 	[SerializeField] private CircleCollider2D _groundTrigger;
 	[SerializeField] private AudioSource _coinSound;
+	[SerializeField] private PlayerHealth _playerHealth;
 
 	private FaceFliper _faceFliper;
 	private Mover _mover;
@@ -28,6 +29,7 @@ public class MotionControl : MonoBehaviour
 	private bool _isAttack;
 	private bool _isGrounded;
 	private bool _canMoving;
+	private bool _isIAlive = true;
 
 	public event Action SitOrdered;
 	public event Action JumpOrdered;
@@ -39,10 +41,14 @@ public class MotionControl : MonoBehaviour
 	{
 		_faceFliper = GetComponent<FaceFliper>();
 		_mover = GetComponent<Mover>();
+		_playerHealth = GetComponent<PlayerHealth>();
 	}
 
 	private void Update()
 	{
+		if (_isIAlive == false)
+			return;
+
 		if (_isAttack)
 			return;
 
@@ -68,6 +74,18 @@ public class MotionControl : MonoBehaviour
 			RunOrdered?.Invoke();
 		else
 			IdleOrdered?.Invoke();
+
+	}
+
+	private void OnEnable()
+	{
+		_playerHealth.DeadOrdered += Dead;
+
+	}
+
+	private void OnDisable()
+	{
+		_playerHealth.DeadOrdered -= Dead;
 
 	}
 
@@ -118,7 +136,9 @@ public class MotionControl : MonoBehaviour
 
 	private bool WasGrounded()
 	{
-		return Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _groundMask).Length > 0;
+		bool isGroundHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _groundMask).Length > 0;
+		bool isEnemyHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _enemyMask).Length > 0;
+		return isEnemyHere || isGroundHere;
 	}
 
 	private void Jump()
@@ -126,7 +146,12 @@ public class MotionControl : MonoBehaviour
 		if (Input.GetKeyDown(JumpKey))
 		{
 			_isGrounded = false;
-				_mover.ImpulseMove(transform.up * _jumpSpeed);
+			_mover.ImpulseMove(transform.up * _jumpSpeed);
 		}
+	}
+
+	private void Dead()
+	{
+		_isIAlive = false;
 	}
 }
