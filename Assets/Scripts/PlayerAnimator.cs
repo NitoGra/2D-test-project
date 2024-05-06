@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(MotionControl), typeof(Animator))]
+[RequireComponent(typeof(MotionControl), typeof(Animator), typeof(PlayerHealth))]
 public class PlayerAnimator : MonoBehaviour
 {
 	private readonly int Sit = Animator.StringToHash(nameof(Sit));
@@ -14,21 +15,11 @@ public class PlayerAnimator : MonoBehaviour
 	[SerializeField] private Animator _animator;
 	[SerializeField] private PlayerHealth _playerHealth;
 
-	private void Start()
-	{
-		//_playerHealth = GetComponent<PlayerHealth>();
-	}
-
-	private void FixedUpdate()
-	{
-		IsAttackClip();
-	}
-
 	private void OnEnable()
 	{
+		_playerHealth.DeadOrdered += PlayDead;
 		_motionControl.JumpOrdered += PlayJump;
 		_motionControl.IdleOrdered += PlayIdle;
-		_playerHealth.DeadOrdered += PlayDead;
 		_motionControl.RunOrdered += PlayRun;
 		_motionControl.SitOrdered += PlaySit;
 		_motionControl.AttackOrdered += PlayAttack;
@@ -47,11 +38,12 @@ public class PlayerAnimator : MonoBehaviour
 	private void PlayIdle()
 	{
 		_animator.Play(Idle);
-	}	
-	
+	}
+
 	private void PlayDead()
 	{
 		_animator.Play(Dead);
+		StartCoroutine(MakePlayerDead());
 	}
 
 	private void PlaySit()
@@ -74,8 +66,16 @@ public class PlayerAnimator : MonoBehaviour
 		_animator.Play(Attack);
 	}
 
-	public bool IsAttackClip()
+	private bool IsPlayerDead()
 	{
-		return _animator.GetCurrentAnimatorStateInfo(0).IsName(nameof(Attack));
+		return _animator.GetCurrentAnimatorStateInfo(0).IsName(nameof(Dead));
+	}
+
+	private IEnumerator MakePlayerDead()
+	{
+		if (IsPlayerDead())
+			gameObject.SetActive(false);
+
+		yield return null;
 	}
 }
