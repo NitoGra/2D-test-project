@@ -6,6 +6,7 @@ public class EnemyAttack : MonoBehaviour
 {
 	[SerializeField] private int _damage;
 	[SerializeField] private Collider2D _attackCollider;
+	[SerializeField] private float _attackDelay;
 
 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
 
@@ -32,7 +33,7 @@ public class EnemyAttack : MonoBehaviour
 			}
 		}
 	}
-
+	
 	private void EndAttack()
 	{
 		_attackCollider.gameObject.SetActive(false);

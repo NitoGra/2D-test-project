@@ -12,6 +12,8 @@ public class PlayerHealth : MonoBehaviour
 		_health -= damage;
 
 		if (_health <= 0)
+		{
 			DeadOrdered?.Invoke();
+		}
 	}
 }

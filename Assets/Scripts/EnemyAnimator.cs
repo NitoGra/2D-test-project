@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-[RequireComponent(typeof(Animator), typeof(EnemyPatrol), typeof(EnemyHealth))]
+[RequireComponent(typeof(Animator), typeof(EnemyControl), typeof(EnemyHealth))]
 public class EnemyAnimator : MonoBehaviour
 {
 	[SerializeField] private Animator _animator;
@@ -10,7 +10,7 @@ public class EnemyAnimator : MonoBehaviour
 	private static readonly int EnemyWalk = Animator.StringToHash(nameof(EnemyWalk));
 	private static readonly int EnemyAttack = Animator.StringToHash(nameof(EnemyAttack));
 
-	[SerializeField] private EnemyPatrol _enemyPatrol;
+	[SerializeField] private EnemyControl _enemyPatrol;
 	[SerializeField] private EnemyHealth _enemyHealth;
 	[SerializeField] private EnemyAttack _enemyAttack;
 

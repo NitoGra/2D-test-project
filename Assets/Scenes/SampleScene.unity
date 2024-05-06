@@ -712,7 +712,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 716165886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.11, y: 0.878, z: 0}
+  m_LocalPosition: {x: 7.02, y: 0.878, z: 0}
   m_LocalScale: {x: 0.1635557, y: 0.17385343, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1439,7 +1439,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869117109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.01, y: 0.878, z: 0}
+  m_LocalPosition: {x: -5.6, y: 0.878, z: 0}
   m_LocalScale: {x: 0.1635557, y: 0.17385343, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1753,7 +1753,7 @@ GameObject:
   - component: {fileID: 1136863710}
   - component: {fileID: 1136863715}
   - component: {fileID: 1136863714}
-  - component: {fileID: 1136863713}
+  - component: {fileID: 1136863721}
   - component: {fileID: 1136863716}
   - component: {fileID: 1136863717}
   - component: {fileID: 1136863718}
@@ -1859,29 +1859,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1136863713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136863709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7026de1c7617ad4b9d5dd8afd4d60f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _wayPoints:
-  - {fileID: 1877673431}
-  - {fileID: 678243442}
-  _speed: 6
-  _mover: {fileID: 1136863720}
-  _froniViewPoints:
-  - {fileID: 534225854}
-  - {fileID: 716165887}
-  _backViewPoints:
-  - {fileID: 580191307}
-  - {fileID: 869117110}
 --- !u!50 &1136863714
 Rigidbody2D:
   serializedVersion: 4
@@ -1967,7 +1944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1136863711}
-  _enemyPatrol: {fileID: 1136863713}
+  _enemyPatrol: {fileID: 1136863721}
   _enemyHealth: {fileID: 1136863717}
   _enemyAttack: {fileID: 1136863719}
 --- !u!114 &1136863717
@@ -2010,6 +1987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 2
   _attackCollider: {fileID: 1198135170}
+  _attackDelay: 0
 --- !u!114 &1136863720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2022,6 +2000,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ed00e092367d341876da89c33f3a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1136863721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136863709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7dde907b2b10d7499977d8d994b10aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wayPoints:
+  - {fileID: 1877673431}
+  - {fileID: 678243442}
+  _speed: 6
+  _mover: {fileID: 1136863720}
+  _attackDistance: 3
+  _attackDelay: 1
+  _secondsHuntDelay: 4
+  _froniViewPoints:
+  - {fileID: 534225854}
+  - {fileID: 716165887}
+  _backViewPoints:
+  - {fileID: 580191307}
+  - {fileID: 869117110}
 --- !u!1 &1198135168
 GameObject:
   m_ObjectHideFlags: 0

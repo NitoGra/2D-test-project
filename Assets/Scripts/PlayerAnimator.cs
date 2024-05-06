@@ -42,8 +42,9 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlayDead()
 	{
+		float deathDelay = 1.5f;
+		Invoke(nameof(StartDead), deathDelay);
 		_animator.Play(Dead);
-		StartCoroutine(MakePlayerDead());
 	}
 
 	private void PlaySit()
@@ -66,16 +67,8 @@ public class PlayerAnimator : MonoBehaviour
 		_animator.Play(Attack);
 	}
 
-	private bool IsPlayerDead()
+	private void StartDead()
 	{
-		return _animator.GetCurrentAnimatorStateInfo(0).IsName(nameof(Dead));
-	}
-
-	private IEnumerator MakePlayerDead()
-	{
-		if (IsPlayerDead())
-			gameObject.SetActive(false);
-
-		yield return null;
+		gameObject.SetActive(false);
 	}
 }

@@ -74,19 +74,6 @@ public class MotionControl : MonoBehaviour
 			RunOrdered?.Invoke();
 		else
 			IdleOrdered?.Invoke();
-
-	}
-
-	private void OnEnable()
-	{
-		_playerHealth.DeadOrdered += Dead;
-
-	}
-
-	private void OnDisable()
-	{
-		_playerHealth.DeadOrdered -= Dead;
-
 	}
 
 	private void FixedUpdate()
@@ -95,6 +82,16 @@ public class MotionControl : MonoBehaviour
 
 		if (_canMoving)
 			_mover.HorizontalMove(_moveVector * _speed * _speedMultiplier);
+	}
+
+	private void OnEnable()
+	{
+		_playerHealth.DeadOrdered += Dead;
+	}
+
+	private void OnDisable()
+	{
+		_playerHealth.DeadOrdered -= Dead;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -153,5 +150,6 @@ public class MotionControl : MonoBehaviour
 	private void Dead()
 	{
 		_isIAlive = false;
+		_canMoving= false;
 	}
 }
