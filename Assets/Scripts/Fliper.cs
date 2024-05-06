@@ -10,7 +10,7 @@ public class FaceFliper : MonoBehaviour
 	public void Flip(float velocityX)
 	{
 		if (velocityX > 0)
-			_transform.rotation= ForwardRotation;
+			_transform.rotation = ForwardRotation;
 		else if (velocityX < 0)
 			_transform.rotation = BackwardRotation;
 	}
