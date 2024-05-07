@@ -5,19 +5,22 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
 	[SerializeField] private MotionControl _motionControl;
-	[SerializeField] private CapsuleCollider2D _capsuleCollider;
+	[SerializeField] private CapsuleCollider2D _damageCollider;
 	[SerializeField] private int _damage;
-	[SerializeField] private LayerMask _groundMask;
 	[SerializeField] private float _punchForce;
 	[SerializeField] private float _punchUpForce;
+
+	[SerializeField] private AudioSource _audio;
+	[SerializeField] private AudioClip _punchHitSound;
+	[SerializeField] private AudioClip _punchMissSound;
 
 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
 
 	public void DoAttack()
 	{
 		List<Collider2D> collidersHits = new();
-		_capsuleCollider.gameObject.SetActive(true);
-		int colliderHitsCount = _capsuleCollider.OverlapCollider(_contactFilter2D, collidersHits);
+		_damageCollider.gameObject.SetActive(true);
+		int colliderHitsCount = _damageCollider.OverlapCollider(_contactFilter2D, collidersHits);
 
 		if (colliderHitsCount > 0)
 		{
@@ -29,11 +32,18 @@ public class PlayerAttack : MonoBehaviour
 					enemyHealth.TakeDamage(_damage);
 					Vector2 punchVector = new Vector2(transform.right.x * _punchForce, _punchUpForce);
 					enemyHealth.gameObject.GetComponent<Rigidbody2D>().AddForce(punchVector, ForceMode2D.Impulse);
+
+					_audio.clip = _punchHitSound;
 					break;
 				}
 			}
 		}
+		else
+		{
+			_audio.clip = _punchMissSound;
+		}
 
-		_capsuleCollider.gameObject.SetActive(false);
+		_audio.Play();
+		_damageCollider.gameObject.SetActive(false);
 	}
 }

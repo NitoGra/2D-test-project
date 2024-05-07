@@ -46,8 +46,8 @@ public class EnemyAttack : MonoBehaviour
 	public void DoAttack()
 	{
 		List<Collider2D> collidersHits = new();
-		_capsuleCollider.gameObject.SetActive(true);
-		int colliderHitsCount = _capsuleCollider.OverlapCollider(_contactFilter2D, collidersHits);
+		_damageCollider.gameObject.SetActive(true);
+		int colliderHitsCount = _damageCollider.OverlapCollider(_contactFilter2D, collidersHits);
 
 		if (colliderHitsCount > 0)
 		{
@@ -64,7 +64,7 @@ public class EnemyAttack : MonoBehaviour
 			}
 		}
 
-		_capsuleCollider.gameObject.SetActive(false);
+		_damageCollider.gameObject.SetActive(false);
  
  
  

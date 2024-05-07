@@ -25,9 +25,9 @@ public class MotionControl : MonoBehaviour
 	[SerializeField] private AudioSource _audio;
 	[SerializeField] private AudioClip _medicBagSound;
 	[SerializeField] private AudioClip _coinSound;
-	[SerializeField] private AudioClip _punchSound;
 	[SerializeField] private AudioClip _damageSound;
 	[SerializeField] private AudioClip _deadSound;
+
 	private float _damageVolume = 0.5f;
 	private float _normalVolume = 1;
 
@@ -140,9 +140,6 @@ public class MotionControl : MonoBehaviour
 			AttackOrdered?.Invoke();
 			_canMoving = false;
 			_isAttack = true;
-
-			_audio.clip = _punchSound;
-			_audio.Play();
 		}
 
 		return _canMoving;
