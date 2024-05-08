@@ -70,13 +70,20 @@ public class EnemyControl : MonoBehaviour
 		if (frontHit.collider != null)
 		{
 			if (frontHit.collider.TryGetComponent(out PlayerHealth playerHealth))
+			{
 				TargetFound(playerHealth);
+				return;
+			}
 		}
-
+		
 		if (backhit.collider != null)
 		{
 			if (backhit.collider.TryGetComponent(out PlayerHealth playerHealth))
+			{
+				RotateToTarget(playerHealth.transform.position);
 				TargetFound(playerHealth);
+				return;
+			}
 		}
 	}
 
@@ -84,7 +91,6 @@ public class EnemyControl : MonoBehaviour
 	{
 		_secondsHuntCount = 0;
 		_target = playerHealth.gameObject;
-		RotateToTarget(_target.transform.position);
 		AttackOrder();
 	}
 

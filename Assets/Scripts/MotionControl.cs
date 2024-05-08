@@ -39,8 +39,8 @@ public class MotionControl : MonoBehaviour
 	private bool _canMoving;
 	private bool _isIAlive = true;
 	private bool _isIAnimate = true;
-	private int _medicBagHealing = 2;
-	private float _damageAnimationDelay = 1f;
+	private int _medicBagHealCount = 2;
+	private float _damageDelay = 1f;
 
 	public event Action SitOrdered;
 	public event Action JumpOrdered;
@@ -63,8 +63,8 @@ public class MotionControl : MonoBehaviour
 		if (_isAttack)
 			return;
 
-		_faceFliper.Flip(_moveVector.x);
 		_isGrounded = WasGrounded();
+		_faceFliper.Flip(_moveVector.x);
 		_canMoving = true;
 
 		if (_isGrounded == false)
@@ -85,13 +85,9 @@ public class MotionControl : MonoBehaviour
 			return;
 
 		if (_moveVector.x != 0)
-		{
 			RunOrdered?.Invoke();
-		}
 		else
-		{
 			IdleOrdered?.Invoke();
-		}
 	}
 
 	private void FixedUpdate()
@@ -119,18 +115,9 @@ public class MotionControl : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.TryGetComponent<Coin>(out Coin coin))
-		{
-			coin.PickUp();
-			_audio.clip = _coinSound;
-			_audio.Play();
-		}
+			TakeCoin(coin);
 		else if (collision.gameObject.TryGetComponent<MedicBag>(out MedicBag medicBag))
-		{
-			medicBag.PickUp();
-			_audio.clip = _medicBagSound;
-			_audio.Play();
-			_playerHealth.Healing(_medicBagHealing);
-		}
+			TakeMedicBag(medicBag);
 	}
 
 	private bool TryAttack()
@@ -193,12 +180,27 @@ public class MotionControl : MonoBehaviour
 		_audio.clip = _damageSound;
 		_audio.volume = _damageVolume;
 		_audio.Play();
-		Invoke(nameof(NormalState), _damageAnimationDelay);
+		Invoke(nameof(NormalState), _damageDelay);
 	}
 
 	private void NormalState()
 	{
 		_audio.volume = _normalVolume;
 		_isIAnimate = true;
+	}
+
+	private void TakeMedicBag(MedicBag medicBag)
+	{
+		medicBag.PickUp();
+		_audio.clip = _medicBagSound;
+		_audio.Play();
+		_playerHealth.Healing(_medicBagHealCount);
+	}
+
+	private void TakeCoin(Coin coin)
+	{
+		coin.PickUp();
+		_audio.clip = _coinSound;
+		_audio.Play();
 	}
 }
