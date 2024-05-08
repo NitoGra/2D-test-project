@@ -26,6 +26,7 @@ public class PlayerAttack : MonoBehaviour
 		List<Collider2D> collidersHits = new();
 		_damageCollider.gameObject.SetActive(true);
 		int colliderHitsCount = _damageCollider.OverlapCollider(_contactFilter2D, collidersHits);
+		_audio.clip = _punchMissSound;
 
 		if (colliderHitsCount > 0)
 		{
@@ -41,10 +42,6 @@ public class PlayerAttack : MonoBehaviour
 					break;
 				}
 			}
-		}
-		else
-		{
-			_audio.clip = _punchMissSound;
 		}
 
 		_audio.Play();

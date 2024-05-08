@@ -70,22 +70,22 @@ public class EnemyControl : MonoBehaviour
 		if (frontHit.collider != null)
 		{
 			if (frontHit.collider.TryGetComponent(out PlayerHealth playerHealth))
-			{
-				_secondsHuntCount = 0;
-				_target = playerHealth.gameObject;
-				AttackOrder();
-			}
+				TargetFound(playerHealth);
 		}
-		else if (backhit.collider != null)
+
+		if (backhit.collider != null)
 		{
 			if (backhit.collider.TryGetComponent(out PlayerHealth playerHealth))
-			{
-				_secondsHuntCount = 0;
-				_target = playerHealth.gameObject;
-				RotateToTarget(_target.transform.position);
-				AttackOrder();
-			}
+				TargetFound(playerHealth);
 		}
+	}
+
+	private void TargetFound(PlayerHealth playerHealth)
+	{
+		_secondsHuntCount = 0;
+		_target = playerHealth.gameObject;
+		RotateToTarget(_target.transform.position);
+		AttackOrder();
 	}
 
 	private void AttackOrder()
