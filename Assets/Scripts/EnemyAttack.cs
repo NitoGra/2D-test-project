@@ -39,33 +39,3 @@ public class EnemyAttack : MonoBehaviour
 		EnemyWalkOrdered?.Invoke();
 	}
 }
-
-/*
- 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
-
-	public void DoAttack()
-	{
-		List<Collider2D> collidersHits = new();
-		_damageCollider.gameObject.SetActive(true);
-		int colliderHitsCount = _damageCollider.OverlapCollider(_contactFilter2D, collidersHits);
-
-		if (colliderHitsCount > 0)
-		{
-			foreach (Collider2D collider in collidersHits)
-			{
-				if (collider.gameObject.TryGetComponent<EnemyAnimator>(out EnemyAnimator enemyAnimator))
-				{
-					EnemyHealth playerHealth = collider.GetComponent<EnemyHealth>();
-					playerHealth.TakeDamage(_damage);
-					Vector2 punchVector = new Vector2(transform.right.x * _punchForce, _punchUpForce);
-					playerHealth.gameObject.GetComponent<Rigidbody2D>().AddForce(punchVector, ForceMode2D.Impulse);
-					break;
-				}
-			}
-		}
-
-		_damageCollider.gameObject.SetActive(false);
- 
- 
- 
- */

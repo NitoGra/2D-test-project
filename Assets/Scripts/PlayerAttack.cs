@@ -10,11 +10,16 @@ public class PlayerAttack : MonoBehaviour
 	[SerializeField] private float _punchForce;
 	[SerializeField] private float _punchUpForce;
 
-	[SerializeField] private AudioSource _audio;
+	private AudioSource _audio;
 	[SerializeField] private AudioClip _punchHitSound;
 	[SerializeField] private AudioClip _punchMissSound;
 
 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
+
+	private void Start()
+	{
+		_audio = GetComponent<AudioSource>();
+	}
 
 	public void DoAttack()
 	{
@@ -32,7 +37,6 @@ public class PlayerAttack : MonoBehaviour
 					enemyHealth.TakeDamage(_damage);
 					Vector2 punchVector = new Vector2(transform.right.x * _punchForce, _punchUpForce);
 					enemyHealth.gameObject.GetComponent<Rigidbody2D>().AddForce(punchVector, ForceMode2D.Impulse);
-
 					_audio.clip = _punchHitSound;
 					break;
 				}

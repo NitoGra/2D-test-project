@@ -730,14 +730,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663553640}
-  m_LocalRotation: {x: 0, y: 0, z: -0.61566144, w: 0.78801084}
+  m_LocalRotation: {x: -0, y: -0, z: -0.65397215, w: 0.7565187}
   m_LocalPosition: {x: 2.1, y: 2.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 755333618}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -76}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -81.684}
 --- !u!70 &663553642
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -770,8 +770,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.040234216, y: -0.40828097}
-  m_Size: {x: 0.6508089, y: 2.0931761}
+  m_Offset: {x: -0.2875463, y: 0.43243748}
+  m_Size: {x: 1.0471058, y: 3.6762335}
   m_Direction: 0
 --- !u!1 &678243440
 GameObject:
@@ -986,7 +986,6 @@ MonoBehaviour:
   _audio: {fileID: 755333626}
   _medicBagSound: {fileID: 8300000, guid: 53de82a279144d34da318781a2f7adeb, type: 3}
   _coinSound: {fileID: 8300000, guid: 2561d825ccd869f48a075e6dd83cbdf1, type: 3}
-  _punchSound: {fileID: 8300000, guid: e347a5d8c5abb0a41999d152d00c6868, type: 3}
   _damageSound: {fileID: 8300000, guid: 808426a9f7497ab46a4f39dce37c44f9, type: 3}
   _deadSound: {fileID: 8300000, guid: 997a5b7bcc1527841af56fec55a60507, type: 3}
 --- !u!212 &755333621
@@ -1098,7 +1097,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 3.5, y: 3.97}
+    oldSize: {x: 3.521742, y: 4}
     newSize: {x: 3.72, y: 3.88}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1263,8 +1262,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.097014904, y: 1.5168787}
-  m_Size: {x: 0.8416116, y: 3.073515}
+  m_Offset: {x: 0.092475414, y: 1.5454345}
+  m_Size: {x: 0.8723235, y: 3.7310996}
   m_Direction: 0
 --- !u!114 &755333628
 MonoBehaviour:
@@ -1292,13 +1291,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motionControl: {fileID: 755333619}
-  _capsuleCollider: {fileID: 663553642}
+  _damageCollider: {fileID: 663553642}
   _damage: 1
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 512
   _punchForce: 5
   _punchUpForce: 1
+  _punchHitSound: {fileID: 8300000, guid: e347a5d8c5abb0a41999d152d00c6868, type: 3}
+  _punchMissSound: {fileID: 8300000, guid: a6e50d2cd94945a4f89c3a64376bd814, type: 3}
 --- !u!114 &755333630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1377,9 +1375,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.22515438, y: 0.48}
+  m_Offset: {x: -0.22771597, y: 0.48000008}
   serializedVersion: 2
-  m_Radius: 0.6351869
+  m_Radius: 0.5590832
 --- !u!1 &827349549
 GameObject:
   m_ObjectHideFlags: 0
@@ -2161,7 +2159,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2.29, y: 2.61}
+    oldSize: {x: 2.3011384, y: 2.6200001}
     newSize: {x: 3.48, y: 3.97}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2334,8 +2332,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.58, y: 2.76}
-    newSize: {x: 0.58, y: 2.76}
+    oldSize: {x: 0.600297, y: 2.79}
+    newSize: {x: 0.600297, y: 2.79}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -2375,7 +2373,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1198135168}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -2440,7 +2438,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.58, y: 2.76}
+  m_Size: {x: 0.600297, y: 2.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3028,8 +3026,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.58, y: 2.76}
-    newSize: {x: 0.58, y: 2.76}
+    oldSize: {x: 0.600297, y: 2.79}
+    newSize: {x: 0.600297, y: 2.79}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -3134,7 +3132,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.58, y: 2.76}
+  m_Size: {x: 0.600297, y: 2.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3433,7 +3431,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2.29, y: 2.61}
+    oldSize: {x: 2.3011384, y: 2.6200001}
     newSize: {x: 3.48, y: 3.97}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

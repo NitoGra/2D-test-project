@@ -126,7 +126,6 @@ public class EnemyControl : MonoBehaviour
 
 	private void LoseTarget()
 	{
-		print("Цель потеряна!");
 		StopCoroutine(_targetLose);
 		_target = null;
 		_targetLose = null;

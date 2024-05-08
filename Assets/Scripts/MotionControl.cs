@@ -39,8 +39,8 @@ public class MotionControl : MonoBehaviour
 	private bool _canMoving;
 	private bool _isIAlive = true;
 	private bool _isIAnimate = true;
-	private int _medicBagHealCount = 2;
-	private float _damageDelay = 1f;
+	private int _medicBagHealing = 2;
+	private float _damageAnimationDelay = 1f;
 
 	public event Action SitOrdered;
 	public event Action JumpOrdered;
@@ -112,7 +112,7 @@ public class MotionControl : MonoBehaviour
 
 	private void OnDisable()
 	{
-		_playerHealth.DamageTakeOrderd += Damage;
+		_playerHealth.DamageTakeOrderd -= Damage;
 		_playerHealth.DeadOrdered -= Dead;
 	}
 
@@ -129,7 +129,7 @@ public class MotionControl : MonoBehaviour
 			medicBag.PickUp();
 			_audio.clip = _medicBagSound;
 			_audio.Play();
-			_playerHealth.Healing(_medicBagHealCount);
+			_playerHealth.Healing(_medicBagHealing);
 		}
 	}
 
@@ -179,11 +179,10 @@ public class MotionControl : MonoBehaviour
 
 	private void Dead()
 	{
-		_audio.clip = _deadSound;
-		_audio.Play();
-
 		_isIAlive = false;
 		_canMoving = false;
+		_audio.clip = _deadSound;
+		_audio.Play();
 	}
 
 	private void Damage()
@@ -194,7 +193,7 @@ public class MotionControl : MonoBehaviour
 		_audio.clip = _damageSound;
 		_audio.volume = _damageVolume;
 		_audio.Play();
-		Invoke(nameof(NormalState), _damageDelay);
+		Invoke(nameof(NormalState), _damageAnimationDelay);
 	}
 
 	private void NormalState()
