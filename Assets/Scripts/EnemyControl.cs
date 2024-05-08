@@ -64,8 +64,9 @@ public class EnemyControl : MonoBehaviour
 		RaycastHit2D frontHit = Physics2D.Linecast(_froniViewPoints[0].position, _froniViewPoints[1].position);
 		RaycastHit2D backhit = Physics2D.Linecast(_backViewPoints[0].position, _backViewPoints[1].position);
 
-		Debug.DrawLine(_froniViewPoints[0].position, _froniViewPoints[1].position, Color.red, 2);
-		Debug.DrawLine(_backViewPoints[0].position, _backViewPoints[1].position, Color.blue, 2);
+		float drawLineDelay = 0.7f;
+		Debug.DrawLine(_froniViewPoints[0].position, _froniViewPoints[1].position, Color.red, drawLineDelay);
+		Debug.DrawLine(_backViewPoints[0].position, _backViewPoints[1].position, Color.blue, drawLineDelay);
 
 		if (frontHit.collider != null)
 		{
@@ -134,6 +135,7 @@ public class EnemyControl : MonoBehaviour
 	{
 		StopCoroutine(_targetLose);
 		_target = null;
+		_timerToAttack = 0;
 		_targetLose = null;
 		RotateToTarget(_wayPoint.position);
 	}

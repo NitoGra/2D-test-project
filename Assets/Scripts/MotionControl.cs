@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Mover), typeof(SpriteRenderer), typeof(FaceFliper))]
 public class MotionControl : MonoBehaviour
@@ -39,8 +40,9 @@ public class MotionControl : MonoBehaviour
 	private bool _canMoving;
 	private bool _isIAlive = true;
 	private bool _isIAnimate = true;
-	private int _medicBagHealCount = 2;
+	private int _medicBagHealing = 2;
 	private float _damageDelay = 1f;
+	private float _restartSceneDelay = 5f;
 
 	public event Action SitOrdered;
 	public event Action JumpOrdered;
@@ -95,9 +97,7 @@ public class MotionControl : MonoBehaviour
 		_moveVector.x = Input.GetAxis(Horizontal);
 
 		if (_canMoving)
-		{
 			_mover.HorizontalMove(_moveVector * _speed * _speedMultiplier);
-		}
 	}
 
 	private void OnEnable()
@@ -170,6 +170,7 @@ public class MotionControl : MonoBehaviour
 		_canMoving = false;
 		_audio.clip = _deadSound;
 		_audio.Play();
+		Invoke(nameof(RestartScene),_restartSceneDelay);
 	}
 
 	private void Damage()
@@ -194,7 +195,7 @@ public class MotionControl : MonoBehaviour
 		medicBag.PickUp();
 		_audio.clip = _medicBagSound;
 		_audio.Play();
-		_playerHealth.Healing(_medicBagHealCount);
+		_playerHealth.Healing(_medicBagHealing);
 	}
 
 	private void TakeCoin(Coin coin)
@@ -202,5 +203,10 @@ public class MotionControl : MonoBehaviour
 		coin.PickUp();
 		_audio.clip = _coinSound;
 		_audio.Play();
+	}
+
+	private void RestartScene()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 }
