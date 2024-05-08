@@ -366,7 +366,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.81, z: -10}
+  m_LocalPosition: {x: -0.45, y: 0.47, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1563,7 +1563,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1068759121}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.3, y: 0.4404, z: -0.0020247842}
+  m_LocalPosition: {x: 8.3, y: 0.22, z: -0.0020247842}
   m_LocalScale: {x: 1.9195845, y: 1.2108076, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2055,6 +2055,8 @@ MonoBehaviour:
   _mover: {fileID: 1136863720}
   _attackDistance: 3
   _attackDelay: 1
+  _enemyHealth: {fileID: 1136863717}
+  _stunOnHitTime: 0.2
   _secondsHuntDelay: 4
   _froniViewPoints:
   - {fileID: 534225854}

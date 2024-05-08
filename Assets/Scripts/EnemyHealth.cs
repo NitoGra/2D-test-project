@@ -18,9 +18,9 @@ public class EnemyHealth : MonoBehaviour
 			EnemyDeadOrdered?.Invoke();
 		}
 	}
-	/*
+	
 	public void Dead()
 	{
 		gameObject.SetActive(false);
-	}*/
+	}
 }
