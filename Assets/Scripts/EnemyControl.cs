@@ -11,7 +11,9 @@ public class EnemyControl : MonoBehaviour
 	[SerializeField] private Mover _mover;
 	[SerializeField] private float _attackDistance;
 	[SerializeField] private float _attackDelay;
+	[SerializeField] private EnemyHealth _enemyHealth;
 
+	[SerializeField] private float _stunOnHitTime;
 	[SerializeField] private float _secondsHuntDelay;
 	private float _timerToAttack;
 
@@ -42,11 +44,13 @@ public class EnemyControl : MonoBehaviour
 	private void OnEnable()
 	{
 		LoseTargetOrdered += LoseTarget;
+		_enemyHealth.EnemyDamageOrdered += GetHit;
 	}
 
 	private void OnDisable()
 	{
 		LoseTargetOrdered -= LoseTarget;
+		_enemyHealth.EnemyDamageOrdered -= GetHit;
 	}
 
 	private void FixedUpdate()
@@ -170,5 +174,10 @@ public class EnemyControl : MonoBehaviour
 
 		LoseTargetOrdered?.Invoke();
 		yield return null;
+	}
+	
+	private void GetHit()
+	{
+		_timerToAttack -= _stunOnHitTime;
 	}
 }

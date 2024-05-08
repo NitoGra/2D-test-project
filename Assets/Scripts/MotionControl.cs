@@ -59,13 +59,14 @@ public class MotionControl : MonoBehaviour
 
 	private void Update()
 	{
+		_isGrounded = WasGrounded();
+
 		if (_isIAlive == false)
 			return;
 
 		if (_isAttack)
 			return;
 
-		_isGrounded = WasGrounded();
 		_faceFliper.Flip(_moveVector.x);
 		_canMoving = true;
 
