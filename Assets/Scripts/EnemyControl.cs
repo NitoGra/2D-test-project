@@ -32,7 +32,7 @@ public class EnemyControl : MonoBehaviour
 	private int _indexWayPoint;
 	private Transform _wayPoint;
 
-	public event Action EnemyAttackOrdered;
+	public event Action AttackOrdered;
 	public event Action LoseTargetOrdered;
 
 	private void Start()
@@ -45,13 +45,13 @@ public class EnemyControl : MonoBehaviour
 	private void OnEnable()
 	{
 		LoseTargetOrdered += LoseTarget;
-		_health.EnemyDamageOrdered += GetHit;
+		_health.DamageOrdered += GetHit;
 	}
 
 	private void OnDisable()
 	{
 		LoseTargetOrdered -= LoseTarget;
-		_health.EnemyDamageOrdered -= GetHit;
+		_health.DamageOrdered -= GetHit;
 	}
 
 	private void FixedUpdate()
@@ -115,7 +115,7 @@ public class EnemyControl : MonoBehaviour
 				if (distance <= _attackDistance)
 				{
 					RotateToTarget(_target.transform.position);
-					EnemyAttackOrdered?.Invoke();
+					AttackOrdered?.Invoke();
 					_timerToAttack = 0;
 				}
 			}

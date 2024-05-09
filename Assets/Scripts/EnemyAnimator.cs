@@ -15,16 +15,16 @@ public class EnemyAnimator : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_attack.EnemyWalkOrdered += PlayWalk;
-		_health.EnemyDeadOrdered += PlayDead;
-		_control.EnemyAttackOrdered += PlayAttack;
+		_attack.WalkOrdered += PlayWalk;
+		_health.DeadOrdered += PlayDead;
+		_control.AttackOrdered += PlayAttack;
 	}
 
 	private void OnDisable()
 	{
-		_attack.EnemyWalkOrdered -= PlayWalk;
-		_health.EnemyDeadOrdered -= PlayDead;
-		_control.EnemyAttackOrdered -= PlayAttack;
+		_attack.WalkOrdered -= PlayWalk;
+		_health.DeadOrdered -= PlayDead;
+		_control.AttackOrdered -= PlayAttack;
 	}
 	
 	private void PlayWalk()

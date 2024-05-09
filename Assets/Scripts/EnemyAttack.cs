@@ -9,7 +9,7 @@ public class EnemyAttack : MonoBehaviour
 
 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
 
-	public event Action EnemyWalkOrdered;
+	public event Action WalkOrdered;
 
 	public void DoAttack()
 	{
@@ -36,6 +36,6 @@ public class EnemyAttack : MonoBehaviour
 	private void EndAttack()
 	{
 		_attackCollider.gameObject.SetActive(false);
-		EnemyWalkOrdered?.Invoke();
+		WalkOrdered?.Invoke();
 	}
 }

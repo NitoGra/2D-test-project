@@ -5,17 +5,17 @@ public class EnemyHealth : MonoBehaviour
 {
 	[SerializeField] private int _health;
 
-	public event Action EnemyDeadOrdered;
-	public event Action EnemyDamageOrdered;
+	public event Action DeadOrdered;
+	public event Action DamageOrdered;
 
 	public void TakeDamage(int damage)
 	{
 		_health -= damage;
-		EnemyDamageOrdered?.Invoke();
+		DamageOrdered?.Invoke();
 
 		if (_health <= 0)
 		{
-			EnemyDeadOrdered?.Invoke();
+			DeadOrdered?.Invoke();
 		}
 	}
 	
