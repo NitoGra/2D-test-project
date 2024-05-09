@@ -123,7 +123,7 @@ public class MotionControl : MonoBehaviour
 
 	private void TakeMedicBag(MedicBag medicBag)
 	{
-		medicBag.PickUp();
+		medicBag.Pickup();
 		_audio.clip = _medicBagSound;
 		_audio.Play();
 		_playerHealth.Healing(_medicBagHealing);
@@ -131,7 +131,7 @@ public class MotionControl : MonoBehaviour
 
 	private void TakeCoin(Coin coin)
 	{
-		coin.PickUp();
+		coin.Pickup();
 		_audio.clip = _coinSound;
 		_audio.Play();
 	}

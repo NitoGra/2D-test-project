@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class PickUps : MonoBehaviour
+public class Pickups : MonoBehaviour
 {
-	public void PickUp() => gameObject.SetActive(false);
+	public void Pickup() => gameObject.SetActive(false);
 }

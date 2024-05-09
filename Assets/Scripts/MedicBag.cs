@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MedicBag : PickUps
+public class MedicBag : Pickups
 {
 
 }
