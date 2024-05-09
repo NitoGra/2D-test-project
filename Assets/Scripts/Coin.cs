@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+public class Coin : PickUps
 {
-	public void PickUp() => gameObject.SetActive(false);
+	
 }

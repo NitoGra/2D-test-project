@@ -6,30 +6,31 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(FaceFliper))]
 public class EnemyControl : MonoBehaviour
 {
-	[SerializeField] private List<Transform> _wayPoints;
 	[SerializeField] private float _speed;
-	[SerializeField] private Mover _mover;
 	[SerializeField] private float _attackDistance;
 	[SerializeField] private float _attackDelay;
-	[SerializeField] private EnemyHealth _enemyHealth;
+	[SerializeField] private Mover _mover;
+	[SerializeField] private EnemyHealth _health;
 
 	[SerializeField] private float _stunOnHitTime;
 	[SerializeField] private float _secondsHuntDelay;
-	private float _timerToAttack;
+	[SerializeField] private List<Transform> _wayPoints;
 
 	[SerializeField] private Transform[] _froniViewPoints = new Transform[2];
 	[SerializeField] private Transform[] _backViewPoints = new Transform[2];
 
+	private float _timerToAttack;
 	private int _huntDistance;
 	private float _secondsHuntCount = 0;
 
-	private int _indexWayPoint;
-	private Transform _wayPoint;
-
 	private FaceFliper _faceFliper;
+
 	private GameObject _target;
 	private Vector2 _lastTargetPosition;
 	private Coroutine _targetLose;
+
+	private int _indexWayPoint;
+	private Transform _wayPoint;
 
 	public event Action EnemyAttackOrdered;
 	public event Action LoseTargetOrdered;
@@ -44,13 +45,13 @@ public class EnemyControl : MonoBehaviour
 	private void OnEnable()
 	{
 		LoseTargetOrdered += LoseTarget;
-		_enemyHealth.EnemyDamageOrdered += GetHit;
+		_health.EnemyDamageOrdered += GetHit;
 	}
 
 	private void OnDisable()
 	{
 		LoseTargetOrdered -= LoseTarget;
-		_enemyHealth.EnemyDamageOrdered -= GetHit;
+		_health.EnemyDamageOrdered -= GetHit;
 	}
 
 	private void FixedUpdate()

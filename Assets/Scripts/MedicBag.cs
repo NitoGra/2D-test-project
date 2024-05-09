@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MedicBag : MonoBehaviour
+public class MedicBag : PickUps
 {
-	public void PickUp() => gameObject.SetActive(false);
+
 }

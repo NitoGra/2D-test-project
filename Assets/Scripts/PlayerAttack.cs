@@ -4,15 +4,15 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class PlayerAttack : MonoBehaviour
 {
-	[SerializeField] private MotionControl _motionControl;
-	[SerializeField] private CapsuleCollider2D _damageCollider;
 	[SerializeField] private int _damage;
 	[SerializeField] private float _punchForce;
 	[SerializeField] private float _punchUpForce;
-
-	private AudioSource _audio;
+	[SerializeField] private MotionControl _motionControl;
+	[SerializeField] private CapsuleCollider2D _damageCollider;
 	[SerializeField] private AudioClip _punchHitSound;
 	[SerializeField] private AudioClip _punchMissSound;
+
+	private AudioSource _audio;
 
 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
 
@@ -32,9 +32,8 @@ public class PlayerAttack : MonoBehaviour
 		{
 			foreach (Collider2D collider in collidersHits)
 			{
-				if (collider.gameObject.TryGetComponent<EnemyAnimator>(out EnemyAnimator enemyAnimator))
+				if (collider.gameObject.TryGetComponent<EnemyHealth>(out EnemyHealth enemyHealth))
 				{
-					EnemyHealth enemyHealth = collider.GetComponent<EnemyHealth>();
 					enemyHealth.TakeDamage(_damage);
 					Vector2 punchVector = new Vector2(transform.right.x * _punchForce, _punchUpForce);
 					enemyHealth.gameObject.GetComponent<Rigidbody2D>().AddForce(punchVector, ForceMode2D.Impulse);

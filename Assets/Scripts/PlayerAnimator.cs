@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(MotionControl), typeof(Animator), typeof(PlayerHealth))]
@@ -14,15 +13,15 @@ public class PlayerAnimator : MonoBehaviour
 
 	[SerializeField] private MotionControl _motionControl;
 	[SerializeField] private Animator _animator;
-	[SerializeField] private PlayerHealth _playerHealth;
+	[SerializeField] private PlayerHealth _health;
 	[SerializeField] private float _deathDelay;
 
 	private void OnEnable()
 	{
 		_motionControl.JumpOrdered += PlayJump;
 		_motionControl.IdleOrdered += PlayIdle;
-		_playerHealth.DeadOrdered += PlayDead;
-		_playerHealth.DamageTakeOrderd += PlayDamage;
+		_health.DeadOrdered += PlayDead;
+		_health.DamageTakeOrderd += PlayDamage;
 		_motionControl.RunOrdered += PlayRun;
 		_motionControl.SitOrdered += PlaySit;
 		_motionControl.AttackOrdered += PlayAttack;
@@ -32,8 +31,8 @@ public class PlayerAnimator : MonoBehaviour
 	{
 		_motionControl.JumpOrdered -= PlayJump;
 		_motionControl.IdleOrdered -= PlayIdle;
-		_playerHealth.DeadOrdered -= PlayDead;
-		_playerHealth.DamageTakeOrderd -= PlayDamage;
+		_health.DeadOrdered -= PlayDead;
+		_health.DamageTakeOrderd -= PlayDamage;
 		_motionControl.RunOrdered -= PlayRun;
 		_motionControl.SitOrdered -= PlaySit;
 		_motionControl.AttackOrdered -= PlayAttack;

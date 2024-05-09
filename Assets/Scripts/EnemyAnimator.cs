@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Playables;
 
 [RequireComponent(typeof(Animator), typeof(EnemyControl), typeof(EnemyHealth))]
 public class EnemyAnimator : MonoBehaviour
@@ -10,22 +9,22 @@ public class EnemyAnimator : MonoBehaviour
 	private static readonly int EnemyWalk = Animator.StringToHash(nameof(EnemyWalk));
 	private static readonly int EnemyAttack = Animator.StringToHash(nameof(EnemyAttack));
 
-	[SerializeField] private EnemyControl _enemyPatrol;
-	[SerializeField] private EnemyHealth _enemyHealth;
-	[SerializeField] private EnemyAttack _enemyAttack;
+	[SerializeField] private EnemyControl _control;
+	[SerializeField] private EnemyHealth _health;
+	[SerializeField] private EnemyAttack _attack;
 
 	private void OnEnable()
 	{
-		_enemyAttack.EnemyWalkOrdered += PlayWalk;
-		_enemyHealth.EnemyDeadOrdered += PlayDead;
-		_enemyPatrol.EnemyAttackOrdered += PlayAttack;
+		_attack.EnemyWalkOrdered += PlayWalk;
+		_health.EnemyDeadOrdered += PlayDead;
+		_control.EnemyAttackOrdered += PlayAttack;
 	}
 
 	private void OnDisable()
 	{
-		_enemyAttack.EnemyWalkOrdered -= PlayWalk;
-		_enemyHealth.EnemyDeadOrdered -= PlayDead;
-		_enemyPatrol.EnemyAttackOrdered -= PlayAttack;
+		_attack.EnemyWalkOrdered -= PlayWalk;
+		_health.EnemyDeadOrdered -= PlayDead;
+		_control.EnemyAttackOrdered -= PlayAttack;
 	}
 	
 	private void PlayWalk()

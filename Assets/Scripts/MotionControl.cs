@@ -104,21 +104,36 @@ public class MotionControl : MonoBehaviour
 	private void OnEnable()
 	{
 		_playerHealth.DamageTakeOrderd += Damage;
-		_playerHealth.DeadOrdered += Dead;
+		_playerHealth.DeadOrdered += Die;
 	}
 
 	private void OnDisable()
 	{
 		_playerHealth.DamageTakeOrderd -= Damage;
-		_playerHealth.DeadOrdered -= Dead;
+		_playerHealth.DeadOrdered -= Die;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.TryGetComponent<Coin>(out Coin coin))
+		if (collision.gameObject.TryGetComponent(out Coin coin))
 			TakeCoin(coin);
-		else if (collision.gameObject.TryGetComponent<MedicBag>(out MedicBag medicBag))
+		else if (collision.gameObject.TryGetComponent(out MedicBag medicBag))
 			TakeMedicBag(medicBag);
+	}
+
+	private void TakeMedicBag(MedicBag medicBag)
+	{
+		medicBag.PickUp();
+		_audio.clip = _medicBagSound;
+		_audio.Play();
+		_playerHealth.Healing(_medicBagHealing);
+	}
+
+	private void TakeCoin(Coin coin)
+	{
+		coin.PickUp();
+		_audio.clip = _coinSound;
+		_audio.Play();
 	}
 
 	private bool TryAttack()
@@ -165,7 +180,7 @@ public class MotionControl : MonoBehaviour
 		}
 	}
 
-	private void Dead()
+	private void Die()
 	{
 		_isIAlive = false;
 		_canMoving = false;
@@ -189,21 +204,6 @@ public class MotionControl : MonoBehaviour
 	{
 		_audio.volume = _normalVolume;
 		_isIAnimate = true;
-	}
-
-	private void TakeMedicBag(MedicBag medicBag)
-	{
-		medicBag.PickUp();
-		_audio.clip = _medicBagSound;
-		_audio.Play();
-		_playerHealth.Healing(_medicBagHealing);
-	}
-
-	private void TakeCoin(Coin coin)
-	{
-		coin.PickUp();
-		_audio.clip = _coinSound;
-		_audio.Play();
 	}
 
 	private void RestartScene()
