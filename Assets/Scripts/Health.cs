@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class Health : MonoBehaviour
 {
 	[SerializeField] private int _maxHealth;
 	[SerializeField] private int _health;
 
 	public event Action DeadOrdered;
-	public event Action DamageTakeOrderd;
+	public event Action TakeDamageOrdered;
 
 	public void TakeDamage(int damage)
 	{
@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
 		if (_health <= 0)
 			DeadOrdered?.Invoke();
 		else
-			DamageTakeOrderd?.Invoke();
+			TakeDamageOrdered?.Invoke();
 	}
 
 	public void Healing(int healing)
@@ -25,5 +25,10 @@ public class PlayerHealth : MonoBehaviour
 
 		if (_health > _maxHealth)
 			_health = _maxHealth;
+	}
+
+	public void Dead()
+	{
+		gameObject.SetActive(false);
 	}
 }

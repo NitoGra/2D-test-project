@@ -3,14 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer), typeof(FaceFliper))]
-public class EnemyControl : MonoBehaviour
+[RequireComponent(typeof(Mover))]
+public class EnemyControl : Unit
 {
 	[SerializeField] private float _speed;
 	[SerializeField] private float _attackDistance;
 	[SerializeField] private float _attackDelay;
 	[SerializeField] private Mover _mover;
-	[SerializeField] private EnemyHealth _health;
 
 	[SerializeField] private float _stunOnHitTime;
 	[SerializeField] private float _secondsHuntDelay;
@@ -23,8 +22,6 @@ public class EnemyControl : MonoBehaviour
 	private int _huntDistance;
 	private float _secondsHuntCount = 0;
 
-	private FaceFliper _faceFliper;
-
 	private GameObject _target;
 	private Vector2 _lastTargetPosition;
 	private Coroutine _targetLose;
@@ -35,25 +32,25 @@ public class EnemyControl : MonoBehaviour
 	public event Action AttackOrdered;
 	public event Action LoseTargetOrdered;
 
-	private void Start()
+	protected override void Start()
 	{
-		_faceFliper = GetComponent<FaceFliper>();
+		base.Start();
 		_indexWayPoint = 0;
 		_wayPoint = _wayPoints[_indexWayPoint];
 	}
 
-	private void OnEnable()
+	protected override void OnEnable()
 	{
+		base.OnEnable();
 		LoseTargetOrdered += LoseTarget;
-		_health.DamageOrdered += GetHit;
 	}
 
-	private void OnDisable()
+	protected override void OnDisable()
 	{
+		base.OnDisable();
 		LoseTargetOrdered -= LoseTarget;
-		_health.DamageOrdered -= GetHit;
 	}
-
+	
 	private void FixedUpdate()
 	{
 		TryFindTarget();
@@ -66,25 +63,25 @@ public class EnemyControl : MonoBehaviour
 
 	private void TryFindTarget()
 	{
-		RaycastHit2D frontHit = Physics2D.Linecast(_froniViewPoints[0].position, _froniViewPoints[1].position);
-		RaycastHit2D backhit = Physics2D.Linecast(_backViewPoints[0].position, _backViewPoints[1].position);
+		Color frontColor = Color.red;
+		Color backColor = Color.blue;
 
-		float drawLineDelay = 0.7f;
-		Debug.DrawLine(_froniViewPoints[0].position, _froniViewPoints[1].position, Color.red, drawLineDelay);
-		Debug.DrawLine(_backViewPoints[0].position, _backViewPoints[1].position, Color.blue, drawLineDelay);
-
-		if (frontHit.collider != null)
+		Collider2D health = GetColliderOnLine(_froniViewPoints[0].position, _froniViewPoints[1].position, frontColor);
+		
+		if (health != null)
 		{
-			if (frontHit.collider.TryGetComponent(out PlayerHealth playerHealth))
+			if (health.TryGetComponent(out Health playerHealth))
 			{
 				TargetFound(playerHealth);
 				return;
 			}
 		}
-		
-		if (backhit.collider != null)
+
+		health = GetColliderOnLine(_backViewPoints[0].position, _backViewPoints[1].position, backColor);
+
+		if (health != null)
 		{
-			if (backhit.collider.TryGetComponent(out PlayerHealth playerHealth))
+			if (health.TryGetComponent(out Health playerHealth))
 			{
 				RotateToTarget(playerHealth.transform.position);
 				TargetFound(playerHealth);
@@ -93,7 +90,14 @@ public class EnemyControl : MonoBehaviour
 		}
 	}
 
-	private void TargetFound(PlayerHealth playerHealth)
+	private Collider2D GetColliderOnLine(Vector2 startLine, Vector2 endLine, Color lineColor)
+	{
+		float drawLineDelay = 0.7f;
+		Debug.DrawLine(startLine, endLine, lineColor, drawLineDelay);
+		return Physics2D.Linecast(startLine, endLine).collider;
+	}
+
+	private void TargetFound(Health playerHealth)
 	{
 		_secondsHuntCount = 0;
 		_target = playerHealth.gameObject;
@@ -131,11 +135,6 @@ public class EnemyControl : MonoBehaviour
 		_wayPoint = _wayPoints[_indexWayPoint];
 	}
 
-	private void RotateToTarget(Vector2 targetToLook)
-	{
-		_faceFliper.Flip(targetToLook.x - transform.position.x);
-	}
-
 	private void LoseTarget()
 	{
 		StopCoroutine(_targetLose);
@@ -147,7 +146,7 @@ public class EnemyControl : MonoBehaviour
 
 	private void MoveToWayPoint()
 	{
-		Vector2 target = new Vector2(_wayPoint.position.x, transform.position.y);
+		Vector2 target = new(_wayPoint.position.x, transform.position.y);
 		transform.position = Vector2.MoveTowards(transform.position, target, _speed * Time.deltaTime);
 
 		if (transform.position.x == _wayPoint.position.x)
@@ -160,7 +159,7 @@ public class EnemyControl : MonoBehaviour
 	private void MoveToTarget()
 	{
 		RotateToTarget(_target.transform.position);
-		Vector2 target = new Vector2(_lastTargetPosition.x + _huntDistance, transform.position.y);
+		Vector2 target = new(_lastTargetPosition.x + _huntDistance, transform.position.y);
 		transform.position = Vector2.MoveTowards(transform.position, target, _speed * Time.deltaTime);
 	}
 
@@ -176,8 +175,8 @@ public class EnemyControl : MonoBehaviour
 		LoseTargetOrdered?.Invoke();
 		yield return null;
 	}
-	
-	private void GetHit()
+
+	protected override void GetHit()
 	{
 		_timerToAttack -= _stunOnHitTime;
 	}

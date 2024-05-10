@@ -2,8 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(Mover), typeof(SpriteRenderer), typeof(FaceFliper))]
-public class MotionControl : MonoBehaviour
+public class PlayerControl : Unit
 {
 	private const string Horizontal = "Horizontal";
 	private const KeyCode JumpKey = KeyCode.Space;
@@ -21,7 +20,6 @@ public class MotionControl : MonoBehaviour
 	[SerializeField] private LayerMask _groundMask;
 	[SerializeField] private LayerMask _enemyMask;
 	[SerializeField] private CircleCollider2D _groundTrigger;
-	[SerializeField] private PlayerHealth _playerHealth;
 
 	[SerializeField] private AudioSource _audio;
 	[SerializeField] private AudioClip _medicBagSound;
@@ -32,8 +30,8 @@ public class MotionControl : MonoBehaviour
 	private float _damageVolume = 0.5f;
 	private float _normalVolume = 1;
 
-	private FaceFliper _faceFliper;
 	private Mover _mover;
+
 	private Vector2 _moveVector;
 	private bool _isAttack;
 	private bool _isGrounded;
@@ -51,11 +49,10 @@ public class MotionControl : MonoBehaviour
 	public event Action IdleOrdered;
 	public event Action AttackOrdered;
 
-	private void Start()
+	protected override void Start()
 	{
-		_faceFliper = GetComponent<FaceFliper>();
+		base.Start();
 		_mover = GetComponent<Mover>();
-		_playerHealth = GetComponent<PlayerHealth>();
 	}
 
 	private void Update()
@@ -68,7 +65,7 @@ public class MotionControl : MonoBehaviour
 		if (_isAttack)
 			return;
 
-		_faceFliper.Flip(_moveVector.x);
+		FaceFliper.Flip(_moveVector.x);
 		_canMoving = true;
 
 		if (_isGrounded == false)
@@ -108,18 +105,6 @@ public class MotionControl : MonoBehaviour
 			_mover.HorizontalMove(_moveVector * _speed * _speedMultiplier);
 	}
 
-	private void OnEnable()
-	{
-		_playerHealth.DamageTakeOrderd += Damage;
-		_playerHealth.DeadOrdered += Die;
-	}
-
-	private void OnDisable()
-	{
-		_playerHealth.DamageTakeOrderd -= Damage;
-		_playerHealth.DeadOrdered -= Die;
-	}
-
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.gameObject.TryGetComponent(out Coin coin))
@@ -133,7 +118,7 @@ public class MotionControl : MonoBehaviour
 		medicBag.Pickup();
 		_audio.clip = _medicBagSound;
 		_audio.Play();
-		_playerHealth.Healing(_medicBagHealing);
+		Health.Healing(_medicBagHealing);
 	}
 
 	private void TakeCoin(Coin coin)
@@ -187,7 +172,7 @@ public class MotionControl : MonoBehaviour
 		}
 	}
 
-	private void Die()
+	private new void Die()
 	{
 		_isIAlive = false;
 		_canMoving = false;
@@ -196,11 +181,11 @@ public class MotionControl : MonoBehaviour
 		Invoke(nameof(RestartScene), _restartSceneDelay);
 	}
 
-	private void Damage()
+	protected override void GetHit()
 	{
 		_isIAnimate = false;
-		_canMoving = true;
 		_isAttack = false;
+		_canMoving = true;
 		_audio.clip = _damageSound;
 		_audio.volume = _damageVolume;
 		_audio.Play();

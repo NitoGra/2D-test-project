@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(MotionControl), typeof(Animator), typeof(PlayerHealth))]
+[RequireComponent(typeof(PlayerControl), typeof(Animator), typeof(Health))]
 public class PlayerAnimator : MonoBehaviour
 {
 	private readonly int Sit = Animator.StringToHash(nameof(Sit));
@@ -11,17 +11,17 @@ public class PlayerAnimator : MonoBehaviour
 	private readonly int Dead = Animator.StringToHash(nameof(Dead));
 	private readonly int GetDamage = Animator.StringToHash(nameof(GetDamage));
 
-	[SerializeField] private MotionControl _motionControl;
+	[SerializeField] private PlayerControl _motionControl;
 	[SerializeField] private Animator _animator;
-	[SerializeField] private PlayerHealth _health;
+	[SerializeField] private Health _health;
 	[SerializeField] private float _deathDelay;
 
 	private void OnEnable()
 	{
+		_health.DeadOrdered += PlayDead;
+		_health.TakeDamageOrdered += PlayDamage;
 		_motionControl.JumpOrdered += PlayJump;
 		_motionControl.IdleOrdered += PlayIdle;
-		_health.DeadOrdered += PlayDead;
-		_health.DamageTakeOrderd += PlayDamage;
 		_motionControl.RunOrdered += PlayRun;
 		_motionControl.SitOrdered += PlaySit;
 		_motionControl.AttackOrdered += PlayAttack;
@@ -29,10 +29,10 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void OnDisable()
 	{
+		_health.DeadOrdered -= PlayDead;
+		_health.TakeDamageOrdered -= PlayDamage;
 		_motionControl.JumpOrdered -= PlayJump;
 		_motionControl.IdleOrdered -= PlayIdle;
-		_health.DeadOrdered -= PlayDead;
-		_health.DamageTakeOrderd -= PlayDamage;
 		_motionControl.RunOrdered -= PlayRun;
 		_motionControl.SitOrdered -= PlaySit;
 		_motionControl.AttackOrdered -= PlayAttack;

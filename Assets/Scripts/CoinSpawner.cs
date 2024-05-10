@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CoinSpawner : MonoBehaviour
 {
-	[SerializeField] private Rigidbody2D _coinPrefab;
+	[SerializeField] private Coin _coinPrefab;
 	[SerializeField] private float _delay;
 	[SerializeField] private int _maxCoinCount;
 	[SerializeField] private Vector2 _force;
@@ -19,10 +19,11 @@ public class CoinSpawner : MonoBehaviour
 
 		for (int coinCount = 0; coinCount < _maxCoinCount; coinCount++)
 		{
-			Rigidbody2D coin = Instantiate(_coinPrefab);
+			Coin coin = Instantiate(_coinPrefab);
+			Rigidbody2D coinRigidbody = coin.GetComponent<Rigidbody2D>();
 			coin.transform.SetParent(transform);
 			coin.transform.position = transform.position;
-			coin.AddForce(_force, ForceMode2D.Impulse);
+			coinRigidbody.AddForce(_force, ForceMode2D.Impulse);
 			yield return wait;
 		}
 	}
