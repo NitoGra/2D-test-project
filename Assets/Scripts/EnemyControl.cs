@@ -9,7 +9,6 @@ public class EnemyControl : Unit
 	[SerializeField] private float _speed;
 	[SerializeField] private float _attackDistance;
 	[SerializeField] private float _attackDelay;
-	[SerializeField] private Mover _mover;
 
 	[SerializeField] private float _stunOnHitTime;
 	[SerializeField] private float _secondsHuntDelay;

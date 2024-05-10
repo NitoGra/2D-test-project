@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: bd96e997d27cf994b89e4912e12f5c26
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _audio: {instanceID: 0}
+  - _medicBagSound: {fileID: 8300000, guid: 53de82a279144d34da318781a2f7adeb, type: 3}
+  - _coinSound: {fileID: 8300000, guid: 2561d825ccd869f48a075e6dd83cbdf1, type: 3}
+  - _damageSound: {fileID: 8300000, guid: 808426a9f7497ab46a4f39dce37c44f9, type: 3}
+  - _deadSound: {fileID: 8300000, guid: 997a5b7bcc1527841af56fec55a60507, type: 3}
+  - _hitSound: {fileID: 8300000, guid: e347a5d8c5abb0a41999d152d00c6868, type: 3}
+  - _missSound: {fileID: 8300000, guid: a6e50d2cd94945a4f89c3a64376bd814, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Mover), typeof(SpriteRenderer), typeof(FaceFliper))]
+[RequireComponent(typeof(SpriteRenderer), typeof(FaceFliper))]
 public class Unit : MonoBehaviour
 {
 	[SerializeField] protected Health Health;

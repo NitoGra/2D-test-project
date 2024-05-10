@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(Scene), typeof(PlayerAudio), typeof(Mover))]
 public class PlayerControl : Unit
 {
 	private const string Horizontal = "Horizontal";
@@ -20,25 +21,17 @@ public class PlayerControl : Unit
 	[SerializeField] private LayerMask _groundMask;
 	[SerializeField] private LayerMask _enemyMask;
 	[SerializeField] private CircleCollider2D _groundTrigger;
-
-	[SerializeField] private AudioSource _audio;
-	[SerializeField] private AudioClip _medicBagSound;
-	[SerializeField] private AudioClip _coinSound;
-	[SerializeField] private AudioClip _damageSound;
-	[SerializeField] private AudioClip _deadSound;
-
-	private float _damageVolume = 0.5f;
-	private float _normalVolume = 1;
-
+	
+	private PlayerAudio _audio;
 	private Mover _mover;
 
 	private Vector2 _moveVector;
 	private bool _isAttack;
+	private bool _isJump = false;
 	private bool _isGrounded;
-	private bool _canMoving;
 	private bool _isIAlive = true;
 	private bool _isIAnimate = true;
-	private bool _isJump = false;
+	private bool _canIMoving;
 	private int _medicBagHealing = 2;
 	private float _damageDelay = 1f;
 	private float _restartSceneDelay = 5f;
@@ -53,6 +46,7 @@ public class PlayerControl : Unit
 	{
 		base.Start();
 		_mover = GetComponent<Mover>();
+		_audio = GetComponent<PlayerAudio>();
 	}
 
 	private void Update()
@@ -66,15 +60,121 @@ public class PlayerControl : Unit
 			return;
 
 		FaceFliper.Flip(_moveVector.x);
-		_canMoving = true;
+		_canIMoving = true;
 
+		PlayAnimation();
+	}
+
+	private void FixedUpdate()
+	{
+		_moveVector.x = Input.GetAxis(Horizontal);
+
+		Jump();
+
+		if (_canIMoving)
+			_mover.HorizontalMove(_moveVector * _speed * _speedMultiplier);
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.TryGetComponent(out Coin coin))
+			TakeCoin(coin);
+		else if (collision.gameObject.TryGetComponent(out MedicBag medicBag))
+			TakeMedicBag(medicBag);
+	}
+
+	private void TakeMedicBag(MedicBag medicBag)
+	{
+		medicBag.Pickup();
+		_audio.MedicBagSound();
+		Health.Healing(_medicBagHealing);
+	}
+
+	private void TakeCoin(Coin coin)
+	{
+		coin.Pickup();
+		_audio.CoinSound();
+	}
+
+	private bool TryAttack()
+	{
+		if (Input.GetKey(AttackKey))
+		{
+			AttackOrdered?.Invoke();
+			_canIMoving = false;
+			_isAttack = true;
+		}
+
+		return _canIMoving;
+	}
+
+	private void EndAttack()
+	{
+		_isAttack = false;
+	}
+
+	private bool TrySit()
+	{
+		if (Input.GetKey(SitKey))
+		{
+			SitOrdered?.Invoke();
+			_canIMoving = false;
+		}
+
+		return _canIMoving;
+	}
+
+	private bool WasGrounded()
+	{
+		bool isGroundHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _groundMask).Length > 0;
+		bool isEnemyHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _enemyMask).Length > 0;
+		return isEnemyHere || isGroundHere;
+	}
+
+	private void JumpOrder()
+	{
+		if (Input.GetKeyDown(JumpKey))
+		{
+			_isGrounded = false;
+			_isJump = true;
+		}
+	}
+
+	private void Jump()
+	{
+		if (_isJump)
+		{
+			_mover.ImpulseMove(transform.up * _jumpSpeed);
+			_isJump = false;
+		}
+	}
+
+	protected override void Die()
+	{
+		_isIAlive = false;
+		_canIMoving = false;
+		_audio.DeadSound();
+		Invoke(nameof(RestartScene), _restartSceneDelay);
+	}
+
+	protected override void GetHit()
+	{
+		_isIAnimate = false;
+		_isAttack = false;
+		_canIMoving = true;
+		_audio.DamageSound();
+		Invoke(nameof(DoNormalAnimateState), _damageDelay);
+	}
+
+	private void PlayAnimation()
+	{
 		if (_isGrounded == false)
 		{
 			JumpOrdered?.Invoke();
 			return;
 		}
 
-		Jump();
+		JumpOrder();
 
 		if (_isIAnimate == false)
 			return;
@@ -91,110 +191,8 @@ public class PlayerControl : Unit
 			IdleOrdered?.Invoke();
 	}
 
-	private void FixedUpdate()
+	private void DoNormalAnimateState()
 	{
-		_moveVector.x = Input.GetAxis(Horizontal);
-
-		if(_isJump)
-		{
-			_mover.ImpulseMove(transform.up * _jumpSpeed);
-			_isJump = false;
-		}
-
-		if (_canMoving)
-			_mover.HorizontalMove(_moveVector * _speed * _speedMultiplier);
-	}
-
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.gameObject.TryGetComponent(out Coin coin))
-			TakeCoin(coin);
-		else if (collision.gameObject.TryGetComponent(out MedicBag medicBag))
-			TakeMedicBag(medicBag);
-	}
-
-	private void TakeMedicBag(MedicBag medicBag)
-	{
-		medicBag.Pickup();
-		_audio.clip = _medicBagSound;
-		_audio.Play();
-		Health.Healing(_medicBagHealing);
-	}
-
-	private void TakeCoin(Coin coin)
-	{
-		coin.Pickup();
-		_audio.clip = _coinSound;
-		_audio.Play();
-	}
-
-	private bool TryAttack()
-	{
-		if (Input.GetKey(AttackKey))
-		{
-			AttackOrdered?.Invoke();
-			_canMoving = false;
-			_isAttack = true;
-		}
-
-		return _canMoving;
-	}
-
-	private void EndAttack()
-	{
-		_isAttack = false;
-	}
-
-	private bool TrySit()
-	{
-		if (Input.GetKey(SitKey))
-		{
-			SitOrdered?.Invoke();
-			_canMoving = false;
-		}
-
-		return _canMoving;
-	}
-
-	private bool WasGrounded()
-	{
-		bool isGroundHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _groundMask).Length > 0;
-		bool isEnemyHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _enemyMask).Length > 0;
-		return isEnemyHere || isGroundHere;
-	}
-
-	private void Jump()
-	{
-		if (Input.GetKeyDown(JumpKey))
-		{
-			_isGrounded = false;
-			_isJump = true;
-		}
-	}
-
-	private new void Die()
-	{
-		_isIAlive = false;
-		_canMoving = false;
-		_audio.clip = _deadSound;
-		_audio.Play();
-		Invoke(nameof(RestartScene), _restartSceneDelay);
-	}
-
-	protected override void GetHit()
-	{
-		_isIAnimate = false;
-		_isAttack = false;
-		_canMoving = true;
-		_audio.clip = _damageSound;
-		_audio.volume = _damageVolume;
-		_audio.Play();
-		Invoke(nameof(NormalState), _damageDelay);
-	}
-
-	private void NormalState()
-	{
-		_audio.volume = _normalVolume;
 		_isIAnimate = true;
 	}
 
