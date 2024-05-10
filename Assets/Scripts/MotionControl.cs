@@ -40,6 +40,7 @@ public class MotionControl : MonoBehaviour
 	private bool _canMoving;
 	private bool _isIAlive = true;
 	private bool _isIAnimate = true;
+	private bool _isJump = false;
 	private int _medicBagHealing = 2;
 	private float _damageDelay = 1f;
 	private float _restartSceneDelay = 5f;
@@ -96,6 +97,12 @@ public class MotionControl : MonoBehaviour
 	private void FixedUpdate()
 	{
 		_moveVector.x = Input.GetAxis(Horizontal);
+
+		if(_isJump)
+		{
+			_mover.ImpulseMove(transform.up * _jumpSpeed);
+			_isJump = false;
+		}
 
 		if (_canMoving)
 			_mover.HorizontalMove(_moveVector * _speed * _speedMultiplier);
@@ -176,7 +183,7 @@ public class MotionControl : MonoBehaviour
 		if (Input.GetKeyDown(JumpKey))
 		{
 			_isGrounded = false;
-			_mover.ImpulseMove(transform.up * _jumpSpeed);
+			_isJump = true;
 		}
 	}
 
@@ -186,7 +193,7 @@ public class MotionControl : MonoBehaviour
 		_canMoving = false;
 		_audio.clip = _deadSound;
 		_audio.Play();
-		Invoke(nameof(RestartScene),_restartSceneDelay);
+		Invoke(nameof(RestartScene), _restartSceneDelay);
 	}
 
 	private void Damage()
