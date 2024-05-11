@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Scene), typeof(PlayerAudio), typeof(Mover))]
-public class PlayerControl : Unit
+public class Player : Unit
 {
 	private const string Horizontal = "Horizontal";
 	private const KeyCode JumpKey = KeyCode.Space;
@@ -21,7 +21,7 @@ public class PlayerControl : Unit
 	[SerializeField] private LayerMask _groundMask;
 	[SerializeField] private LayerMask _enemyMask;
 	[SerializeField] private CircleCollider2D _groundTrigger;
-	
+
 	private PlayerAudio _audio;
 	private Mover _mover;
 
@@ -32,8 +32,7 @@ public class PlayerControl : Unit
 	private bool _isIAlive = true;
 	private bool _isIAnimate = true;
 	private bool _canIMoving;
-	private int _medicBagHealing = 2;
-	private float _damageDelay = 1f;
+	private float _returnToNormalStateDelay = 1f;
 	private float _restartSceneDelay = 5f;
 
 	public event Action SitOrdered;
@@ -51,24 +50,19 @@ public class PlayerControl : Unit
 
 	private void Update()
 	{
-		_isGrounded = WasGrounded();
-
 		if (_isIAlive == false)
 			return;
 
 		if (_isAttack)
 			return;
 
-		FaceFliper.Flip(_moveVector.x);
-		_canIMoving = true;
-
 		PlayAnimation();
 	}
 
 	private void FixedUpdate()
 	{
+		_isGrounded = WasGrounded();
 		_moveVector.x = Input.GetAxis(Horizontal);
-
 		Jump();
 
 		if (_canIMoving)
@@ -85,15 +79,13 @@ public class PlayerControl : Unit
 
 	private void TakeMedicBag(MedicBag medicBag)
 	{
-		medicBag.Pickup();
-		_audio.MedicBagSound();
-		Health.Healing(_medicBagHealing);
+		medicBag.Pickup(_audio);
+		Health.Healing((int)medicBag.Value);
 	}
 
 	private void TakeCoin(Coin coin)
 	{
-		coin.Pickup();
-		_audio.CoinSound();
+		coin.Pickup(_audio);
 	}
 
 	private bool TryAttack()
@@ -106,11 +98,6 @@ public class PlayerControl : Unit
 		}
 
 		return _canIMoving;
-	}
-
-	private void EndAttack()
-	{
-		_isAttack = false;
 	}
 
 	private bool TrySit()
@@ -163,11 +150,14 @@ public class PlayerControl : Unit
 		_isAttack = false;
 		_canIMoving = true;
 		_audio.DamageSound();
-		Invoke(nameof(DoNormalAnimateState), _damageDelay);
+		Invoke(nameof(DoNormalAnimateState), _returnToNormalStateDelay);
 	}
 
 	private void PlayAnimation()
 	{
+		FaceFliper.Flip(_moveVector.x);
+		_canIMoving = true;
+
 		if (_isGrounded == false)
 		{
 			JumpOrdered?.Invoke();
@@ -191,13 +181,7 @@ public class PlayerControl : Unit
 			IdleOrdered?.Invoke();
 	}
 
-	private void DoNormalAnimateState()
-	{
-		_isIAnimate = true;
-	}
-
-	private void RestartScene()
-	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-	}
+	private void DoNormalAnimateState() => _isIAnimate = true;
+	private void EndAttack() => _isAttack = false;
+	private void RestartScene() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 }

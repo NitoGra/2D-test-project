@@ -52,7 +52,7 @@ public class Attack : MonoBehaviour
 			_audio?.MissSound();
 		}
 
-		Invoke(nameof(ColliderVanish),_attackColliderVanishDelay);
+		Invoke(nameof(ColliderVanish), _attackColliderVanishDelay);
 	}
 
 	private void ColliderVanish()

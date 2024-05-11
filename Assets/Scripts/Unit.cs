@@ -29,6 +29,6 @@ public class Unit : MonoBehaviour
 		FaceFliper.Flip(targetToLook.x - transform.position.x);
 	}
 
-	protected virtual void GetHit(){}
-	protected virtual void Die(){}
+	protected virtual void GetHit() { }
+	protected virtual void Die() { }
 }

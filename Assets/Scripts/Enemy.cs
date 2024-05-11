@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover))]
-public class EnemyControl : Unit
+public class Enemy : Unit
 {
 	[SerializeField] private float _speed;
 	[SerializeField] private float _attackDistance;
@@ -49,7 +49,7 @@ public class EnemyControl : Unit
 		base.OnDisable();
 		LoseTargetOrdered -= LoseTarget;
 	}
-	
+
 	private void FixedUpdate()
 	{
 		TryFindTarget();
@@ -66,7 +66,7 @@ public class EnemyControl : Unit
 		Color backColor = Color.blue;
 
 		Collider2D health = GetColliderOnLine(_froniViewPoints[0].position, _froniViewPoints[1].position, frontColor);
-		
+
 		if (health != null)
 		{
 			if (health.TryGetComponent(out Health playerHealth))

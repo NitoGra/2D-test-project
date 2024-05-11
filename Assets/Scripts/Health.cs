@@ -26,9 +26,4 @@ public class Health : MonoBehaviour
 		if (_health > _maxHealth)
 			_health = _maxHealth;
 	}
-
-	public void Dead()
-	{
-		gameObject.SetActive(false);
-	}
 }
