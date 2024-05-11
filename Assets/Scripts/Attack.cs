@@ -9,7 +9,7 @@ public class Attack : MonoBehaviour
 	[SerializeField] private float _punchUpForce;
 	[SerializeField] private Unit _control;
 	[SerializeField] private Collider2D _damageCollider;
-	[SerializeField] private float _attackColliderVanishDelay;
+	[SerializeField] private float _attackEndDelay;
 
 	private PlayerAudio _audio;
 	private Collider2D _colliderIgnore;
@@ -52,10 +52,10 @@ public class Attack : MonoBehaviour
 			_audio?.MissSound();
 		}
 
-		Invoke(nameof(ColliderVanish), _attackColliderVanishDelay);
+		Invoke(nameof(EndAttack), _attackEndDelay);
 	}
 
-	private void ColliderVanish()
+	private void EndAttack()
 	{
 		_damageCollider.gameObject.SetActive(false);
 	}
