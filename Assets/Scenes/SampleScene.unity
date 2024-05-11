@@ -1174,7 +1174,7 @@ MonoBehaviour:
   _punchUpForce: 1
   _control: {fileID: 755333619}
   _damageCollider: {fileID: 663553642}
-  _attackColliderVanishDelay: 0.1
+  _attackEndDelay: 0
 --- !u!114 &755333630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2138,7 +2138,7 @@ MonoBehaviour:
   _punchUpForce: 3
   _control: {fileID: 1136863726}
   _damageCollider: {fileID: 1198135170}
-  _attackColliderVanishDelay: 0.5
+  _attackEndDelay: 0.3
 --- !u!114 &1136863724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2633,6 +2633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fc71199bff989f45bb31becf46820ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _value: 0
 --- !u!95 &1338644051
 Animator:
   serializedVersion: 5

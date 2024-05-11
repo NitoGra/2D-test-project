@@ -2,10 +2,12 @@
 
 public class Pickups : MonoBehaviour
 {
-	[SerializeField] public float Value { get; private set; }
+	[SerializeField] private float _value;
 
 	public virtual void Pickup(PlayerAudio playerAudio)
 	{
 		gameObject.SetActive(false);
 	}
+
+	public float Value() => _value;
 }

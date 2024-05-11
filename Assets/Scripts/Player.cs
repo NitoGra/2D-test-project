@@ -80,7 +80,7 @@ public class Player : Unit
 	private void TakeMedicBag(MedicBag medicBag)
 	{
 		medicBag.Pickup(_audio);
-		Health.Healing((int)medicBag.Value);
+		Health.Healing((int)medicBag.Value());
 	}
 
 	private void TakeCoin(Coin coin)
