@@ -18,7 +18,7 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_health.DeadOrdered += PlayDead;
+		_health.DieOrdered += PlayDead;
 		_health.TakeDamageOrdered += PlayDamage;
 		_player.JumpOrdered += PlayJump;
 		_player.IdleOrdered += PlayIdle;
@@ -29,7 +29,7 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void OnDisable()
 	{
-		_health.DeadOrdered -= PlayDead;
+		_health.DieOrdered -= PlayDead;
 		_health.TakeDamageOrdered -= PlayDamage;
 		_player.JumpOrdered -= PlayJump;
 		_player.IdleOrdered -= PlayIdle;

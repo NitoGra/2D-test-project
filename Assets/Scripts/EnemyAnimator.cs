@@ -15,13 +15,13 @@ public class EnemyAnimator : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_health.DeadOrdered += PlayDead;
+		_health.DieOrdered += PlayDead;
 		_control.AttackOrdered += PlayAttack;
 	}
 
 	private void OnDisable()
 	{
-		_health.DeadOrdered -= PlayDead;
+		_health.DieOrdered -= PlayDead;
 		_control.AttackOrdered -= PlayAttack;
 	}
 

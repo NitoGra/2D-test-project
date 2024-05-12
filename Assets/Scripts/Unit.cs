@@ -10,13 +10,13 @@ public class Unit : MonoBehaviour
 	protected virtual void OnEnable()
 	{
 		Health.TakeDamageOrdered += GetHit;
-		Health.DeadOrdered += Die;
+		Health.DieOrdered += Die;
 	}
 
 	protected virtual void OnDisable()
 	{
 		Health.TakeDamageOrdered -= GetHit;
-		Health.DeadOrdered -= Die;
+		Health.DieOrdered -= Die;
 	}
 
 	protected virtual void Start()
