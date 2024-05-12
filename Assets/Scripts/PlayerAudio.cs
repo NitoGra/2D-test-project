@@ -3,8 +3,10 @@ using UnityEngine;
 public class PlayerAudio : MonoBehaviour
 {
 	[SerializeField] private AudioSource _audio;
+
 	[SerializeField] private AudioClip _medicBagSound;
 	[SerializeField] private AudioClip _coinSound;
+
 	[SerializeField] private AudioClip _damageSound;
 	[SerializeField] private AudioClip _deadSound;
 

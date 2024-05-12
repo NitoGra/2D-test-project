@@ -12,51 +12,66 @@ public class Attack : MonoBehaviour
 	[SerializeField] private float _attackEndDelay;
 
 	private PlayerAudio _audio;
+	private bool _isAudioPlaying;
+	private bool _playHitSound;
 	private Collider2D _colliderIgnore;
 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
 
 	private void Start()
 	{
 		_audio = GetComponent<PlayerAudio>();
+		_isAudioPlaying = _audio != null;
 		_colliderIgnore = gameObject.GetComponent<Collider2D>();
 	}
 
 	public void DoAttack()
 	{
-		List<Collider2D> collidersHits = new();
-		_damageCollider.gameObject.SetActive(true);
-		int colliderHitsCount = _damageCollider.OverlapCollider(_contactFilter2D, collidersHits);
+		StartAttack();
 
-		if (colliderHitsCount > 0)
-		{
-			foreach (Collider2D collider in collidersHits)
-			{
-				if (collider == _colliderIgnore)
-					continue;
+		if (TryFindEnemies(out List<Collider2D> collidersHits))
+			MakeAttack(collidersHits);
 
-				if (collider.gameObject.TryGetComponent(out Health health))
-				{
-					health.TakeDamage(_damage);
-					Vector2 punchVector = new(transform.right.x * _punchForce, _punchUpForce);
-					health.gameObject.GetComponent<Rigidbody2D>().AddForce(punchVector, ForceMode2D.Impulse);
-					_audio?.HitSound();
-				}
-				else
-				{
-					_audio?.MissSound();
-				}
-			}
-		}
-		else
-		{
-			_audio?.MissSound();
-		}
+		if (_isAudioPlaying)
+			PlaySound();
 
 		Invoke(nameof(EndAttack), _attackEndDelay);
 	}
 
-	private void EndAttack()
+	private bool TryFindEnemies(out List<Collider2D> collidersHits)
 	{
-		_damageCollider.gameObject.SetActive(false);
+		collidersHits = new();
+		int colliderHitsCount = _damageCollider.OverlapCollider(_contactFilter2D, collidersHits);
+		return colliderHitsCount > 0;
+
 	}
+
+	private void MakeAttack(List<Collider2D> collidersHits)
+	{
+		foreach (Collider2D collider in collidersHits)
+		{
+			if (collider == _colliderIgnore)
+				continue;
+
+			if (collider.TryGetComponent(out Health health))
+			{
+				health.TakeDamage(_damage);
+				Vector2 punchVector = new(transform.right.x * _punchForce, _punchUpForce);
+				health.gameObject.GetComponent<Rigidbody2D>().AddForce(punchVector, ForceMode2D.Impulse);
+				_playHitSound = true;
+			}
+		}
+	}
+
+	private void PlaySound()
+	{
+		if (_playHitSound)
+			_audio.HitSound();
+		else
+			_audio.MissSound();
+
+		_playHitSound = false;
+	}
+
+	private void StartAttack() => _damageCollider.gameObject.SetActive(true);
+	private void EndAttack() => _damageCollider.gameObject.SetActive(false);
 }
