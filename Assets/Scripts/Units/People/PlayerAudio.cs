@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
@@ -13,11 +14,8 @@ public class PlayerAudio : MonoBehaviour
 	[SerializeField] private AudioClip _hitSound;
 	[SerializeField] private AudioClip _missSound;
 
-	public void CoinSound()
-	{
-		_audio.clip = _coinSound;
-		_audio.Play();
-	}
+	public AudioClip GetCoinSound => _coinSound;
+	public AudioClip GetMedicBagSound => _medicBagSound;
 
 	public void DamageSound()
 	{
@@ -34,12 +32,6 @@ public class PlayerAudio : MonoBehaviour
 	public void MissSound()
 	{
 		_audio.clip = _missSound;
-		_audio.Play();
-	}
-
-	public void MedicBagSound()
-	{
-		_audio.clip = _medicBagSound;
 		_audio.Play();
 	}
 

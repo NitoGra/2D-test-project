@@ -18,24 +18,24 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_health.DieOrdered += PlayDead;
-		_health.TakeDamageOrdered += PlayDamage;
-		_player.JumpOrdered += PlayJump;
-		_player.IdleOrdered += PlayIdle;
-		_player.RunOrdered += PlayRun;
-		_player.SitOrdered += PlaySit;
-		_player.AttackOrdered += PlayAttack;
+		_health.Died += PlayDead;
+		_health.Damaging += PlayDamage;
+		_player.Jumping += PlayJump;
+		_player.Idleing += PlayIdle;
+		_player.Runing += PlayRun;
+		_player.Siting += PlaySit;
+		_player.Attacking += PlayAttack;
 	}
 
 	private void OnDisable()
 	{
-		_health.DieOrdered -= PlayDead;
-		_health.TakeDamageOrdered -= PlayDamage;
-		_player.JumpOrdered -= PlayJump;
-		_player.IdleOrdered -= PlayIdle;
-		_player.RunOrdered -= PlayRun;
-		_player.SitOrdered -= PlaySit;
-		_player.AttackOrdered -= PlayAttack;
+		_health.Died -= PlayDead;
+		_health.Damaging -= PlayDamage;
+		_player.Jumping -= PlayJump;
+		_player.Idleing -= PlayIdle;
+		_player.Runing -= PlayRun;
+		_player.Siting -= PlaySit;
+		_player.Attacking -= PlayAttack;
 	}
 
 	private void PlayIdle()

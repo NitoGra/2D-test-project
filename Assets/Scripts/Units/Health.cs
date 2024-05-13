@@ -6,17 +6,18 @@ public class Health : MonoBehaviour
 	[SerializeField] private int _maxHealth;
 	[SerializeField] private int _health;
 
-	public event Action DieOrdered;
-	public event Action TakeDamageOrdered;
+	public event Action Died;
+	public event Action Damaging;
 
 	public void TakeDamage(int damage)
 	{
-		_health -= damage;
+		if (damage > 0)
+			_health -= damage;
 
 		if (_health <= 0)
-			DieOrdered?.Invoke();
+			Died?.Invoke();
 		else
-			TakeDamageOrdered?.Invoke();
+			Damaging?.Invoke();
 	}
 
 	public void Healing(int healing)
