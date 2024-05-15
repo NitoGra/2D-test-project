@@ -1,4 +1,5 @@
-using System.Collections;
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -16,7 +17,8 @@ public class PlayerAnimator : MonoBehaviour
 	[SerializeField] private Health _health;
 	[SerializeField] private KeyDetect _keyDetect;
 	[SerializeField] private float _deathDelay;
-	                
+	[SerializeField] private float _damageDelay;
+
 	private void OnEnable()
 	{
 		_health.Died += PlayDead;
@@ -46,20 +48,18 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlayIdle()
 	{
-		if(_player.IsGrounded)
+		if (_player.IsGrounded)
 			_animator.Play(Idle);
 	}
 
 	private void PlayDead()
 	{
+		_animator.SetBool(nameof(Dead), true);
 		Invoke(nameof(StartDead), _deathDelay);
-		_animator.Play(Dead);
 	}
 
 	private void PlayDamage()
 	{
-		//StartCoroutine(DamageAnimation());
-
 		_animator.Play(GetDamage);
 	}
 
@@ -91,21 +91,4 @@ public class PlayerAnimator : MonoBehaviour
 	{
 		gameObject.SetActive(false);
 	}
-	/*
-	private float DamageGetTime = 2; 
-
-	private IEnumerable DamageAnimation()
-	{
-		gameObject.GetComponent<SpriteRenderer>().color = Color.red;
-
-		while (_secondsHuntDelay > _secondsHuntCount)
-		{
-			_secondsHuntCount++;
-			_huntDistance = -UnityEngine.Random.Range(0, (int)_attackDistance);
-			yield return _rememberDelay;
-		}
-
-		LoseTargetOrdered?.Invoke();
-		yield return null;
-	}*/
 }

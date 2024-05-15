@@ -31,7 +31,7 @@ public class KeyDetect : MonoBehaviour
 	private void FixedUpdate()
 	{
 		_moveVector.x = Input.GetAxis(Horizontal);
-		ToNormalState();
+		MakeNormalState();
 		CheckKeys();
 	}
 
@@ -43,7 +43,7 @@ public class KeyDetect : MonoBehaviour
 			return;
 		else if (TryRun())
 			return;
-	
+
 		TryIdle();
 	}
 
@@ -74,7 +74,7 @@ public class KeyDetect : MonoBehaviour
 		if (Input.GetKey(SitKey))
 		{
 			Siting?.Invoke();
-			_isSit= true;
+			_isSit = true;
 		}
 
 		return _isSit;
@@ -97,7 +97,7 @@ public class KeyDetect : MonoBehaviour
 			Idleing?.Invoke();
 	}
 
-	private void ToNormalState()
+	private void MakeNormalState()
 	{
 		_isAttack = false;
 		_isSit = false;

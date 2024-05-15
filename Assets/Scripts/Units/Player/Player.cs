@@ -53,7 +53,7 @@ public class Player : Unit
 
 	private void Jump()
 	{
-		if(IsGrounded)
+		if (IsGrounded)
 			_mover.ImpulseMove(transform.up * _jumpSpeed);
 	}
 
