@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ public class Attack : MonoBehaviour
 	private bool _playHitSound;
 	private Collider2D _colliderIgnore;
 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
+
+	public event Action PlayHitSound;
+	public event Action PlayMissSound;
 
 	private void Start()
 	{
@@ -42,7 +46,6 @@ public class Attack : MonoBehaviour
 		collidersHits = new();
 		int colliderHitsCount = _damageCollider.OverlapCollider(_contactFilter2D, collidersHits);
 		return colliderHitsCount > 0;
-
 	}
 
 	private void MakeAttack(List<Collider2D> collidersHits)
@@ -65,9 +68,9 @@ public class Attack : MonoBehaviour
 	private void PlaySound()
 	{
 		if (_playHitSound)
-			_audio.HitSound();
+			PlayHitSound?.Invoke();
 		else
-			_audio.MissSound();
+			PlayMissSound?.Invoke();
 
 		_playHitSound = false;
 	}

@@ -789,10 +789,12 @@ GameObject:
   - component: {fileID: 755333624}
   - component: {fileID: 755333630}
   - component: {fileID: 755333631}
-  - component: {fileID: 755333617}
-  - component: {fileID: 755333626}
   - component: {fileID: 755333628}
+  - component: {fileID: 755333633}
+  - component: {fileID: 755333632}
   - component: {fileID: 755333625}
+  - component: {fileID: 755333626}
+  - component: {fileID: 755333617}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -856,8 +858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38d5ef343624094f89336ab8dd03477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: {fileID: 755333630}
-  _speed: 20
+  _speed: 30
   _speedMultiplier: 15
   _jumpSpeed: 30
   _groundMask:
@@ -867,6 +868,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _groundTrigger: {fileID: 783150797}
+  _keyDetect: {fileID: 755333632}
 --- !u!212 &755333621
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1000,6 +1002,7 @@ MonoBehaviour:
   _player: {fileID: 755333619}
   _animator: {fileID: 755333622}
   _health: {fileID: 755333630}
+  _keyDetect: {fileID: 755333632}
   _deathDelay: 0.95
 --- !u!114 &755333625
 MonoBehaviour:
@@ -1174,7 +1177,7 @@ MonoBehaviour:
   _punchUpForce: 1
   _control: {fileID: 755333619}
   _damageCollider: {fileID: 663553642}
-  _attackEndDelay: 0
+  _attackEndDelay: 0.1
 --- !u!114 &755333630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1201,6 +1204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd96e997d27cf994b89e4912e12f5c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: {fileID: 755333630}
+  _attack: {fileID: 755333629}
   _audio: {fileID: 755333626}
   _medicBagSound: {fileID: 8300000, guid: 53de82a279144d34da318781a2f7adeb, type: 3}
   _coinSound: {fileID: 8300000, guid: 2561d825ccd869f48a075e6dd83cbdf1, type: 3}
@@ -1208,6 +1213,30 @@ MonoBehaviour:
   _deadSound: {fileID: 8300000, guid: 997a5b7bcc1527841af56fec55a60507, type: 3}
   _hitSound: {fileID: 8300000, guid: e347a5d8c5abb0a41999d152d00c6868, type: 3}
   _missSound: {fileID: 8300000, guid: a6e50d2cd94945a4f89c3a64376bd814, type: 3}
+--- !u!114 &755333632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755333616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2fcbfa1955e854382c3f286aac9049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &755333633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755333616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a59681d708e0a144b44d94998381893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &783150795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,7 +1965,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &1136863715
 BoxCollider2D:
@@ -2165,12 +2194,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ba828aa32d4cd46bc05dfae4e999f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: {fileID: 1136863724}
   _speed: 6
   _attackDistance: 3
   _attackDelay: 1
   _stunOnHitTime: 0.2
   _secondsHuntDelay: 4
+  _health: {fileID: 1136863724}
   _wayPoints:
   - {fileID: 1877673431}
   - {fileID: 678243442}

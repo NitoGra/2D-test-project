@@ -1,6 +1,6 @@
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Player), typeof(Animator), typeof(Health))]
 public class PlayerAnimator : MonoBehaviour
 {
 	private readonly int Sit = Animator.StringToHash(nameof(Sit));
@@ -14,33 +14,40 @@ public class PlayerAnimator : MonoBehaviour
 	[SerializeField] private Player _player;
 	[SerializeField] private Animator _animator;
 	[SerializeField] private Health _health;
+	[SerializeField] private KeyDetect _keyDetect;
 	[SerializeField] private float _deathDelay;
-
+	                
 	private void OnEnable()
 	{
 		_health.Died += PlayDead;
 		_health.Damaging += PlayDamage;
-		_player.Jumping += PlayJump;
-		_player.Idleing += PlayIdle;
-		_player.Runing += PlayRun;
-		_player.Siting += PlaySit;
-		_player.Attacking += PlayAttack;
+		_keyDetect.Jumping += PlayJump;
+		_keyDetect.Idleing += PlayIdle;
+		_keyDetect.Runing += PlayRun;
+		_keyDetect.Siting += PlaySit;
+		_keyDetect.Attacking += PlayAttack;
 	}
 
 	private void OnDisable()
 	{
 		_health.Died -= PlayDead;
 		_health.Damaging -= PlayDamage;
-		_player.Jumping -= PlayJump;
-		_player.Idleing -= PlayIdle;
-		_player.Runing -= PlayRun;
-		_player.Siting -= PlaySit;
-		_player.Attacking -= PlayAttack;
+		_keyDetect.Jumping -= PlayJump;
+		_keyDetect.Idleing -= PlayIdle;
+		_keyDetect.Runing -= PlayRun;
+		_keyDetect.Siting -= PlaySit;
+		_keyDetect.Attacking -= PlayAttack;
+	}
+
+	private void FixedUpdate()
+	{
+		PlayJump();
 	}
 
 	private void PlayIdle()
 	{
-		_animator.Play(Idle);
+		if(_player.IsGrounded)
+			_animator.Play(Idle);
 	}
 
 	private void PlayDead()
@@ -51,31 +58,54 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlayDamage()
 	{
+		//StartCoroutine(DamageAnimation());
+
 		_animator.Play(GetDamage);
 	}
 
 	private void PlaySit()
 	{
-		_animator.Play(Sit);
+		if (_player.IsGrounded)
+			_animator.Play(Sit);
 	}
 
 	private void PlayJump()
 	{
-		_animator.Play(Jump);
+		if (_player.IsGrounded == false)
+			_animator.Play(Jump);
 	}
 
 	private void PlayRun()
 	{
-		_animator.Play(Run);
+		if (_player.IsGrounded)
+			_animator.Play(Run);
 	}
 
 	private void PlayAttack()
 	{
-		_animator.Play(Attack);
+		if (_player.IsGrounded)
+			_animator.Play(Attack);
 	}
 
 	private void StartDead()
 	{
 		gameObject.SetActive(false);
 	}
+	/*
+	private float DamageGetTime = 2; 
+
+	private IEnumerable DamageAnimation()
+	{
+		gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+
+		while (_secondsHuntDelay > _secondsHuntCount)
+		{
+			_secondsHuntCount++;
+			_huntDistance = -UnityEngine.Random.Range(0, (int)_attackDistance);
+			yield return _rememberDelay;
+		}
+
+		LoseTargetOrdered?.Invoke();
+		yield return null;
+	}*/
 }

@@ -12,6 +12,7 @@ public class Enemy : Unit
 
 	[SerializeField] private float _stunOnHitTime;
 	[SerializeField] private float _secondsHuntDelay;
+	[SerializeField] private Health _health;
 	[SerializeField] private List<Transform> _wayPoints;
 
 	[SerializeField] private Transform[] _froniViewPoints = new Transform[2];
@@ -20,6 +21,7 @@ public class Enemy : Unit
 	private float _timerToAttack;
 	private int _huntDistance;
 	private float _secondsHuntCount = 0;
+	private WaitForSecondsRealtime _rememberDelay = new WaitForSecondsRealtime(1.0f);
 
 	private GameObject _target;
 	private Vector2 _lastTargetPosition;
@@ -36,18 +38,19 @@ public class Enemy : Unit
 		base.Start();
 		_indexWayPoint = 0;
 		_wayPoint = _wayPoints[_indexWayPoint];
+		_health.GetComponent<Health>();
 	}
 
-	protected override void OnEnable()
+	private void OnEnable()
 	{
-		base.OnEnable();
 		LoseTargetOrdered += LoseTarget;
+		_health.Damaging += GetHit;
 	}
 
-	protected override void OnDisable()
+	private void OnDisable()
 	{
-		base.OnDisable();
 		LoseTargetOrdered -= LoseTarget;
+		_health.Damaging -= GetHit;
 	}
 
 	private void FixedUpdate()
@@ -64,7 +67,6 @@ public class Enemy : Unit
 	{
 		Color frontColor = Color.red;
 		Color backColor = Color.blue;
-
 		Collider2D health = GetColliderOnLine(_froniViewPoints[0].position, _froniViewPoints[1].position, frontColor);
 
 		if (health != null)
@@ -168,14 +170,14 @@ public class Enemy : Unit
 		{
 			_secondsHuntCount++;
 			_huntDistance = -UnityEngine.Random.Range(0, (int)_attackDistance);
-			yield return new WaitForSecondsRealtime(1.0f);
+			yield return _rememberDelay;
 		}
 
 		LoseTargetOrdered?.Invoke();
 		yield return null;
 	}
 
-	protected override void GetHit()
+	private void GetHit()
 	{
 		_timerToAttack -= _stunOnHitTime;
 	}

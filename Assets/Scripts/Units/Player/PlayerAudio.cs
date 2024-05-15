@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
 {
+	[SerializeField] private Health _health;
+	[SerializeField] private Attack _attack;
 	[SerializeField] private AudioSource _audio;
 
 	[SerializeField] private AudioClip _medicBagSound;
@@ -17,27 +19,44 @@ public class PlayerAudio : MonoBehaviour
 	public AudioClip GetCoinSound => _coinSound;
 	public AudioClip GetMedicBagSound => _medicBagSound;
 
-	public void DamageSound()
+	private void OnEnable()
+	{
+		_health.Damaging += DamageSound;
+		_health.Died += DeadSound;
+		_attack.PlayHitSound += HitSound;
+		_attack.PlayMissSound += MissSound;
+	}
+
+	private void OnDisable()
+	{
+		_health.Damaging -= DamageSound;
+		_health.Died -= DeadSound;
+		_attack.PlayHitSound -= HitSound;
+		_attack.PlayMissSound -= MissSound;
+	}
+
+	private void DamageSound()
 	{
 		_audio.clip = _damageSound;
 		_audio.Play();
 	}
 
-	public void HitSound()
+	private void DeadSound()
+	{
+		_audio.clip = _deadSound;
+		_audio.Play();
+	}
+
+	private void HitSound()
 	{
 		_audio.clip = _hitSound;
 		_audio.Play();
 	}
 
-	public void MissSound()
+	private void MissSound()
 	{
 		_audio.clip = _missSound;
 		_audio.Play();
 	}
 
-	public void DeadSound()
-	{
-		_audio.clip = _deadSound;
-		_audio.Play();
-	}
 }
