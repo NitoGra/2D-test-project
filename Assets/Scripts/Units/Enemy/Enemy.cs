@@ -10,8 +10,8 @@ public class Enemy : MonoBehaviour
 	[SerializeField] private float _attackDistance;
 	[SerializeField] private float _attackDelay;
 	[SerializeField] private float _stunOnHitTime;
-	[SerializeField] private float _huntEndDelay;	
-	[SerializeField] private float _huntSpeed;	
+	[SerializeField] private float _huntEndDelay;
+	[SerializeField] private float _huntSpeed;
 
 	[SerializeField] private Transform[] _frontViewPoints = new Transform[2];
 	[SerializeField] private Transform[] _backViewPoints = new Transform[2];
@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
 	private Coroutine _targetLose;
 	private EnemyPatrol _enemyPatrol;
 
+	private float _drawLineDelay = 0.1f;
 	private Color _frontColor = Color.red;
 	private Color _backColor = Color.blue;
 
@@ -75,46 +76,46 @@ public class Enemy : MonoBehaviour
 
 	private bool TryFindTarget()
 	{
-		if(TryFind(_frontViewPoints, _frontColor))
+		if (TryFindCollider(_frontViewPoints, _frontColor, out Health playerHealth))
 		{
 			return true;
 		}
-		else if(TryFind(_backViewPoints, _backColor))
+		else if (TryFindCollider(_backViewPoints, _backColor, out playerHealth))
 		{
 			RotateToTarget(playerHealth.transform.position);
 			return true;
 		}
+
 		return false;
 	}
 
-	private bool TryFind(Transform[] _viewPoints, Color lineColor)
+	private bool TryFindCollider(Transform[] _viewPoints, Color lineColor, out Health playerHealth)
 	{
 		Collider2D health = GetColliderOnLine(_viewPoints[0].position, _viewPoints[1].position, lineColor);
 
 		if (health != null)
 		{
-			if (health.TryGetComponent(out Health playerHealth))
+			if (health.TryGetComponent(out playerHealth))
 			{
 				TargetFound(playerHealth);
-				print(playerHealth.name);
 				return true;
 			}
 		}
 
+		playerHealth = null;
 		return false;
 	}
 
 	private Collider2D GetColliderOnLine(Vector2 startLine, Vector2 endLine, Color lineColor)
 	{
-		float drawLineDelay = 0.1f;
-		Debug.DrawLine(startLine, endLine, lineColor, drawLineDelay);
+		Debug.DrawLine(startLine, endLine, lineColor, _drawLineDelay);
 
 		Collider2D collider = Physics2D.Linecast(startLine, endLine).collider;
 
 		if (collider?.name != gameObject.name)
 			return collider;
 
-		return null; 
+		return null;
 	}
 
 	private void TargetFound(Health playerHealth)

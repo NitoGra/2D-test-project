@@ -21,12 +21,12 @@ public class EnemyPatrol : MonoBehaviour
 	{
 		_faceFliper = GetComponent<FaceFliper>();
 	}
-	
+
 	private void OnEnable()
 	{
 		RotateToTarget(_wayPoint.position);
 	}
-	
+
 	private void FixedUpdate()
 	{
 		MoveToWayPoint();

@@ -47,11 +47,6 @@ public class Player : MonoBehaviour
 		_keyDetect.Runing -= Run;
 	}
 
-	private void RotateToTarget(Vector2 targetToLook)
-	{
-		_faceFliper.Flip(targetToLook.x - transform.position.x);
-	}
-
 	private void Run()
 	{
 		_mover.HorizontalMove(_speed * _speedMultiplier * _keyDetect.GetMoveVector());
