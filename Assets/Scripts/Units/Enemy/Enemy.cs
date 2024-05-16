@@ -1,43 +1,43 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Unit
+[RequireComponent(typeof(FaceFliper), typeof(EnemyPatrol), typeof(Health))]
+public class Enemy : MonoBehaviour
 {
-	[SerializeField] private float _speed;
+	[SerializeField] private Health _health;
+
 	[SerializeField] private float _attackDistance;
 	[SerializeField] private float _attackDelay;
-
 	[SerializeField] private float _stunOnHitTime;
-	[SerializeField] private float _secondsHuntDelay;
-	[SerializeField] private Health _health;
-	[SerializeField] private List<Transform> _wayPoints;
+	[SerializeField] private float _huntEndDelay;	
+	[SerializeField] private float _huntSpeed;	
 
-	[SerializeField] private Transform[] _froniViewPoints = new Transform[2];
+	[SerializeField] private Transform[] _frontViewPoints = new Transform[2];
 	[SerializeField] private Transform[] _backViewPoints = new Transform[2];
 
-	private float _timerToAttack;
+	private FaceFliper _faceFliper;
 	private int _huntDistance;
-	private float _secondsHuntCount = 0;
-	private WaitForSecondsRealtime _rememberDelay = new WaitForSecondsRealtime(1.0f);
+	private float _timerToAttack;
+	private float _huntRemembersCount = 0;
+	private WaitForSecondsRealtime _rememberDelay = new(1.0f);
 
 	private GameObject _target;
 	private Vector2 _lastTargetPosition;
 	private Coroutine _targetLose;
+	private EnemyPatrol _enemyPatrol;
 
-	private int _indexWayPoint;
-	private Transform _wayPoint;
+	private Color _frontColor = Color.red;
+	private Color _backColor = Color.blue;
 
 	public event Action AttackOrdered;
 	public event Action LoseTargetOrdered;
 
-	protected override void Start()
+	private void Start()
 	{
-		base.Start();
-		_indexWayPoint = 0;
-		_wayPoint = _wayPoints[_indexWayPoint];
-		_health.GetComponent<Health>();
+		_faceFliper = GetComponent<FaceFliper>();
+		_enemyPatrol = GetComponent<EnemyPatrol>();
+		_health = GetComponent<Health>();
 	}
 
 	private void OnEnable()
@@ -54,52 +54,72 @@ public class Enemy : Unit
 
 	private void FixedUpdate()
 	{
-		TryFindTarget();
+		if (TryFindTarget())
+			EndPatrol();
 
 		if (_target == null)
-			MoveToWayPoint();
+			StartPatrol();
 		else
 			MoveToTarget();
 	}
 
-	private void TryFindTarget()
+	private void StartPatrol()
 	{
-		Color frontColor = Color.red;
-		Color backColor = Color.blue;
-		Collider2D health = GetColliderOnLine(_froniViewPoints[0].position, _froniViewPoints[1].position, frontColor);
+		_enemyPatrol.enabled = true;
+	}
+
+	private void EndPatrol()
+	{
+		_enemyPatrol.enabled = false;
+	}
+
+	private bool TryFindTarget()
+	{
+		if(TryFind(_frontViewPoints, _frontColor))
+		{
+			return true;
+		}
+		else if(TryFind(_backViewPoints, _backColor))
+		{
+			RotateToTarget(playerHealth.transform.position);
+			return true;
+		}
+		return false;
+	}
+
+	private bool TryFind(Transform[] _viewPoints, Color lineColor)
+	{
+		Collider2D health = GetColliderOnLine(_viewPoints[0].position, _viewPoints[1].position, lineColor);
 
 		if (health != null)
 		{
 			if (health.TryGetComponent(out Health playerHealth))
 			{
 				TargetFound(playerHealth);
-				return;
+				print(playerHealth.name);
+				return true;
 			}
 		}
 
-		health = GetColliderOnLine(_backViewPoints[0].position, _backViewPoints[1].position, backColor);
-
-		if (health != null)
-		{
-			if (health.TryGetComponent(out Health playerHealth))
-			{
-				RotateToTarget(playerHealth.transform.position);
-				TargetFound(playerHealth);
-				return;
-			}
-		}
+		return false;
 	}
 
 	private Collider2D GetColliderOnLine(Vector2 startLine, Vector2 endLine, Color lineColor)
 	{
-		float drawLineDelay = 0.7f;
+		float drawLineDelay = 0.1f;
 		Debug.DrawLine(startLine, endLine, lineColor, drawLineDelay);
-		return Physics2D.Linecast(startLine, endLine).collider;
+
+		Collider2D collider = Physics2D.Linecast(startLine, endLine).collider;
+
+		if (collider?.name != gameObject.name)
+			return collider;
+
+		return null; 
 	}
 
 	private void TargetFound(Health playerHealth)
 	{
-		_secondsHuntCount = 0;
+		_huntRemembersCount = 0;
 		_target = playerHealth.gameObject;
 		AttackOrder();
 	}
@@ -129,45 +149,31 @@ public class Enemy : Unit
 		}
 	}
 
-	private void MakeNextPosition()
-	{
-		_indexWayPoint = ++_indexWayPoint % _wayPoints.Count;
-		_wayPoint = _wayPoints[_indexWayPoint];
-	}
-
 	private void LoseTarget()
 	{
 		StopCoroutine(_targetLose);
 		_target = null;
 		_timerToAttack = 0;
 		_targetLose = null;
-		RotateToTarget(_wayPoint.position);
-	}
-
-	private void MoveToWayPoint()
-	{
-		Vector2 target = new(_wayPoint.position.x, transform.position.y);
-		transform.position = Vector2.MoveTowards(transform.position, target, _speed * Time.deltaTime);
-
-		if (transform.position.x == _wayPoint.position.x)
-		{
-			MakeNextPosition();
-			RotateToTarget(_wayPoint.position);
-		}
 	}
 
 	private void MoveToTarget()
 	{
 		RotateToTarget(_target.transform.position);
 		Vector2 target = new(_lastTargetPosition.x + _huntDistance, transform.position.y);
-		transform.position = Vector2.MoveTowards(transform.position, target, _speed * Time.deltaTime);
+		transform.position = Vector2.MoveTowards(transform.position, target, _huntSpeed * Time.deltaTime);
+	}
+
+	private void RotateToTarget(Vector2 targetToLook)
+	{
+		_faceFliper.Flip(targetToLook.x - transform.position.x);
 	}
 
 	private IEnumerator RememberTarget()
 	{
-		while (_secondsHuntDelay > _secondsHuntCount)
+		while (_huntEndDelay > _huntRemembersCount)
 		{
-			_secondsHuntCount++;
+			_huntRemembersCount++;
 			_huntDistance = -UnityEngine.Random.Range(0, (int)_attackDistance);
 			yield return _rememberDelay;
 		}

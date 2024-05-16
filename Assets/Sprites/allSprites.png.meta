@@ -127,9 +127,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 21
-        y: 951
+        y: 1359
         width: 230
-        height: 262
+        height: 263
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,10 +147,10 @@ TextureImporter:
       name: enemy_2
       rect:
         serializedVersion: 2
-        x: 250
-        y: 951
-        width: 227
-        height: 262
+        x: 249
+        y: 1359
+        width: 228
+        height: 263
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,10 +168,10 @@ TextureImporter:
       name: enemy_3
       rect:
         serializedVersion: 2
-        x: 475
-        y: 951
-        width: 229
-        height: 262
+        x: 474
+        y: 1359
+        width: 230
+        height: 263
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,10 +189,10 @@ TextureImporter:
       name: enemyDead_1
       rect:
         serializedVersion: 2
-        x: 706
-        y: 953
-        width: 212
-        height: 253
+        x: 705
+        y: 1362
+        width: 213
+        height: 252
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,9 +211,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 36
-        y: 488
+        y: 897
         width: 353
-        height: 402
+        height: 401
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,7 +232,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 425
-        y: 490
+        y: 898
         width: 352
         height: 400
       alignment: 7
@@ -253,11 +253,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 67
-        y: 91
+        y: 499
         width: 270
-        height: 362
+        height: 361
       alignment: 9
-      pivot: {x: 0.25, y: 0}
+      pivot: {x: 0.26, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -274,11 +274,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 467
-        y: 91
+        y: 501
         width: 270
-        height: 362
+        height: 359
       alignment: 9
-      pivot: {x: 0.25, y: 0}
+      pivot: {x: 0.26, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -295,11 +295,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 877
-        y: 91
+        y: 500
         width: 270
-        height: 362
+        height: 360
       alignment: 9
-      pivot: {x: 0.25, y: 0}
+      pivot: {x: 0.26, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -316,9 +316,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1216
-        y: 91
+        y: 498
         width: 375
-        height: 390
+        height: 392
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -337,9 +337,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 828
-        y: 511
-        width: 352
-        height: 352
+        y: 918
+        width: 353
+        height: 353
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -358,9 +358,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1228
-        y: 511
-        width: 352
-        height: 352
+        y: 918
+        width: 353
+        height: 353
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -379,7 +379,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 952
-        y: 951
+        y: 1359
         width: 198
         height: 269
       alignment: 7
@@ -400,7 +400,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1497
-        y: 961
+        y: 1369
         width: 60
         height: 279
       alignment: 7
@@ -421,9 +421,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1197
-        y: 948
+        y: 1355
         width: 229
-        height: 255
+        height: 257
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -442,8 +442,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1625
-        y: 855
-        width: 293
+        y: 1263
+        width: 294
         height: 421
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -462,10 +462,10 @@ TextureImporter:
       name: walk_22
       rect:
         serializedVersion: 2
-        x: 1960
-        y: 433
-        width: 281
-        height: 423
+        x: 1961
+        y: 843
+        width: 294
+        height: 422
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -484,9 +484,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2273
-        y: 855
+        y: 1263
         width: 275
-        height: 416
+        height: 417
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -504,9 +504,9 @@ TextureImporter:
       name: walk_14
       rect:
         serializedVersion: 2
-        x: 2593
-        y: 855
-        width: 273
+        x: 2592
+        y: 1263
+        width: 275
         height: 416
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -525,10 +525,10 @@ TextureImporter:
       name: walk_21
       rect:
         serializedVersion: 2
-        x: 1625
-        y: 436
-        width: 293
-        height: 420
+        x: 1632
+        y: 845
+        width: 294
+        height: 419
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -547,9 +547,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2273
-        y: 440
+        y: 849
         width: 275
-        height: 416
+        height: 415
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -567,10 +567,10 @@ TextureImporter:
       name: walk_24
       rect:
         serializedVersion: 2
-        x: 2593
-        y: 439
-        width: 273
-        height: 416
+        x: 2592
+        y: 849
+        width: 275
+        height: 414
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -589,11 +589,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1604
-        y: 15
-        width: 286
-        height: 410
+        y: 426
+        width: 287
+        height: 407
       alignment: 9
-      pivot: {x: 0.45, y: 0}
+      pivot: {x: 0.4402519, y: 0.0051895627}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -609,12 +609,12 @@ TextureImporter:
       name: punch_2
       rect:
         serializedVersion: 2
-        x: 1936
-        y: 19
-        width: 348
-        height: 392
+        x: 1935
+        y: 432
+        width: 349
+        height: 387
       alignment: 9
-      pivot: {x: 0.3, y: 0}
+      pivot: {x: 0.25755158, y: 0.0038017647}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -631,11 +631,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2303
-        y: 19
+        y: 431
         width: 521
-        height: 392
+        height: 388
       alignment: 9
-      pivot: {x: 0.2, y: 0}
+      pivot: {x: 0.16460514, y: -0.00000023596066}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -651,11 +651,11 @@ TextureImporter:
       name: walk_12
       rect:
         serializedVersion: 2
-        x: 1962
-        y: 857
-        width: 264
-        height: 422
-      alignment: 9
+        x: 1960
+        y: 1265
+        width: 266
+        height: 423
+      alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -664,6 +664,90 @@ TextureImporter:
       bones: []
       spriteID: 4e1fc983b31476943821ee2a234f31e9
       internalID: -879820974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: getDamage_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 46
+        width: 276
+        height: 411
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3193cb613af8f741837a19a24187e8c
+      internalID: 1850650490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dead_1
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 61
+        width: 360
+        height: 400
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3e5c92380baa0d4aa191f3ce13fa045
+      internalID: 1788547379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: medicBag_1
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 297
+        width: 132
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80e66cb331c75074c90760cc4626fbc3
+      internalID: 1864857635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: corpse_1
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 71
+        width: 148
+        height: 147
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2aa63593d77b63342984bbf4f1b14118
+      internalID: -315615382
       vertices: []
       indices: 
       edges: []
@@ -686,13 +770,17 @@ TextureImporter:
       attack_2: -1750893617
       coin_1: 842608098
       coin_2: -1736946395
+      corpse_1: -315615382
+      dead_1: 1788547379
       enemyDead_1: -300712508
       enemy_1: 785940084
       enemy_2: 1450318311
       enemy_3: 1046526122
+      getDamage_1: 1850650490
       idle_1: 1367831271
       idle_2: -917683942
       jump_1: 2073044896
+      medicBag_1: 1864857635
       punch_1: 1593168189
       punch_2: 30603608
       punch_3: -754698560

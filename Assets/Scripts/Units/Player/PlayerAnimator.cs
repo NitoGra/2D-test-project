@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
@@ -11,6 +9,7 @@ public class PlayerAnimator : MonoBehaviour
 	private readonly int Attack = Animator.StringToHash(nameof(Attack));
 	private readonly int Dead = Animator.StringToHash(nameof(Dead));
 	private readonly int GetDamage = Animator.StringToHash(nameof(GetDamage));
+	private readonly int Corpse = Animator.StringToHash(nameof(Corpse));
 
 	[SerializeField] private Player _player;
 	[SerializeField] private Animator _animator;
@@ -18,6 +17,9 @@ public class PlayerAnimator : MonoBehaviour
 	[SerializeField] private KeyDetect _keyDetect;
 	[SerializeField] private float _deathDelay;
 	[SerializeField] private float _damageDelay;
+
+	private bool _isDead = false;
+	private bool _isDamage = false;
 
 	private void OnEnable()
 	{
@@ -48,47 +50,86 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlayIdle()
 	{
+		if (_isDamage || _isDead)
+			return;
+
 		if (_player.IsGrounded)
 			_animator.Play(Idle);
 	}
 
 	private void PlayDead()
 	{
-		_animator.SetBool(nameof(Dead), true);
-		Invoke(nameof(StartDead), _deathDelay);
+		Invoke(nameof(MakeCorpse), _deathDelay);
+		_isDead = true;
+		_animator.Play(Dead);
 	}
 
 	private void PlayDamage()
 	{
+		Invoke(nameof(EndDamage), _damageDelay);
+		_isDamage = true;
 		_animator.Play(GetDamage);
 	}
 
 	private void PlaySit()
 	{
+		if (_isDamage || _isDead)
+			return;
+
 		if (_player.IsGrounded)
 			_animator.Play(Sit);
 	}
 
 	private void PlayJump()
 	{
+		if (_isDamage || _isDead)
+			return;
+
 		if (_player.IsGrounded == false)
 			_animator.Play(Jump);
 	}
 
 	private void PlayRun()
 	{
+		if (_isDamage || _isDead)
+			return;
+
 		if (_player.IsGrounded)
 			_animator.Play(Run);
 	}
 
 	private void PlayAttack()
 	{
+		if (_isDamage || _isDead)
+			return;
+
 		if (_player.IsGrounded)
 			_animator.Play(Attack);
 	}
 
-	private void StartDead()
+	private void EndDamage()
 	{
-		gameObject.SetActive(false);
+		_isDamage = false;
+	}
+
+	private void MakeCorpse()
+	{
+		_animator.Play(nameof(Corpse));
+		Immobilization();
+		TransformPlayerToCorpse();
+	}
+
+	private void Immobilization()
+	{
+		_keyDetect.enabled = false;
+	}
+
+	private void TransformPlayerToCorpse()
+	{
+		_player.name = nameof(Corpse);
+		_player.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+		BoxCollider2D box = _player.gameObject.GetComponent<BoxCollider2D>();
+		box.size = new Vector2(0.1f, 0.5f);
+		box.offset = new Vector2(0, 0.3f);
 	}
 }

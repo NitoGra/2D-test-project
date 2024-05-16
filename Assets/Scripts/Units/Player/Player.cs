@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerAudio), typeof(Mover), typeof(Health))]
-public class Player : Unit
+[RequireComponent(typeof(FaceFliper), typeof(Mover), typeof(Health))]
+public class Player : MonoBehaviour
 {
 	private const float MinSpeed = 1.0f;
 	private const float MaxSpeed = 100.0f;
@@ -18,13 +18,14 @@ public class Player : Unit
 	[SerializeField] private CircleCollider2D _groundTrigger;
 	[SerializeField] private KeyDetect _keyDetect;
 
+	private FaceFliper _faceFliper;
 	private Mover _mover;
 
 	public bool IsGrounded { get; private set; }
 
-	protected override void Start()
+	private void Start()
 	{
-		base.Start();
+		_faceFliper = GetComponent<FaceFliper>();
 		_mover = GetComponent<Mover>();
 	}
 
@@ -44,6 +45,11 @@ public class Player : Unit
 	{
 		_keyDetect.Jumping -= Jump;
 		_keyDetect.Runing -= Run;
+	}
+
+	private void RotateToTarget(Vector2 targetToLook)
+	{
+		_faceFliper.Flip(targetToLook.x - transform.position.x);
 	}
 
 	private void Run()
@@ -66,6 +72,6 @@ public class Player : Unit
 
 	private void DoFlip()
 	{
-		FaceFliper.Flip(_keyDetect.GetMoveVector().x);
+		_faceFliper.Flip(_keyDetect.GetMoveVector().x);
 	}
 }

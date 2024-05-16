@@ -8,7 +8,6 @@ public class Attack : MonoBehaviour
 	[SerializeField] private int _damage;
 	[SerializeField] private float _punchForce;
 	[SerializeField] private float _punchUpForce;
-	[SerializeField] private Unit _control;
 	[SerializeField] private Collider2D _damageCollider;
 	[SerializeField] private float _attackEndDelay;
 

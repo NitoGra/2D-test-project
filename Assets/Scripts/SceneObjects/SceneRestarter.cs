@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 public class SceneRestarter : MonoBehaviour
 {
 	[SerializeField] private Health player;
-
-	private float _restartSceneDelay = 7f;
+	[SerializeField] private float _restartSceneDelay;
 
 	private void OnEnable()
 	{
