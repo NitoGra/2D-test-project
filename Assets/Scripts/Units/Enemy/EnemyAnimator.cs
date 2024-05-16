@@ -7,7 +7,7 @@ public class EnemyAnimator : MonoBehaviour
 	private static readonly int EnemyWalk = Animator.StringToHash(nameof(EnemyWalk));
 	private static readonly int EnemyAttack = Animator.StringToHash(nameof(EnemyAttack));
 
-	[SerializeField] private Enemy _control;
+	[SerializeField] private EnemyHunt _hunt;
 	[SerializeField] private Animator _animator;
 	[SerializeField] private Health _health;
 	[SerializeField] private Attack _attack;
@@ -16,13 +16,13 @@ public class EnemyAnimator : MonoBehaviour
 	private void OnEnable()
 	{
 		_health.Died += PlayDead;
-		_control.AttackOrdered += PlayAttack;
+		_hunt.AttackOrdered += PlayAttack;
 	}
 
 	private void OnDisable()
 	{
 		_health.Died -= PlayDead;
-		_control.AttackOrdered -= PlayAttack;
+		_hunt.AttackOrdered -= PlayAttack;
 	}
 
 	private void PlayWalk()
@@ -43,6 +43,6 @@ public class EnemyAnimator : MonoBehaviour
 
 	private void StartDead()
 	{
-		gameObject.SetActive(false);
+		gameObject?.SetActive(false);
 	}
 }

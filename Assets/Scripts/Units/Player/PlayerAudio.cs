@@ -58,5 +58,4 @@ public class PlayerAudio : MonoBehaviour
 		_audio.clip = _missSound;
 		_audio.Play();
 	}
-
 }

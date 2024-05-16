@@ -20,6 +20,7 @@ public class PlayerAnimator : MonoBehaviour
 
 	private bool _isDead = false;
 	private bool _isDamage = false;
+	private bool IsAnimated => _isDamage || _isDead;
 
 	private void OnEnable()
 	{
@@ -50,7 +51,7 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlayIdle()
 	{
-		if (_isDamage || _isDead)
+		if (IsAnimated)
 			return;
 
 		if (_player.IsGrounded)
@@ -73,7 +74,7 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlaySit()
 	{
-		if (_isDamage || _isDead)
+		if (IsAnimated)
 			return;
 
 		if (_player.IsGrounded)
@@ -82,7 +83,7 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlayJump()
 	{
-		if (_isDamage || _isDead)
+		if (IsAnimated)
 			return;
 
 		if (_player.IsGrounded == false)
@@ -91,7 +92,7 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlayRun()
 	{
-		if (_isDamage || _isDead)
+		if (IsAnimated)
 			return;
 
 		if (_player.IsGrounded)
@@ -100,7 +101,7 @@ public class PlayerAnimator : MonoBehaviour
 
 	private void PlayAttack()
 	{
-		if (_isDamage || _isDead)
+		if (IsAnimated)
 			return;
 
 		if (_player.IsGrounded)
@@ -116,7 +117,7 @@ public class PlayerAnimator : MonoBehaviour
 	{
 		_animator.Play(nameof(Corpse));
 		Immobilization();
-		TransformPlayerToCorpse();
+		KillPlayer();
 	}
 
 	private void Immobilization()
@@ -124,7 +125,7 @@ public class PlayerAnimator : MonoBehaviour
 		_keyDetect.enabled = false;
 	}
 
-	private void TransformPlayerToCorpse()
+	private void KillPlayer()
 	{
 		_player.name = nameof(Corpse);
 		_player.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;

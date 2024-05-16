@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(FaceFliper), typeof(Mover), typeof(Health))]
+[RequireComponent(typeof(Mover), typeof(Health))]
 public class Player : MonoBehaviour
 {
 	private const float MinSpeed = 1.0f;
@@ -18,21 +18,18 @@ public class Player : MonoBehaviour
 	[SerializeField] private CircleCollider2D _groundTrigger;
 	[SerializeField] private KeyDetect _keyDetect;
 
-	private FaceFliper _faceFliper;
 	private Mover _mover;
 
 	public bool IsGrounded { get; private set; }
 
 	private void Start()
 	{
-		_faceFliper = GetComponent<FaceFliper>();
 		_mover = GetComponent<Mover>();
 	}
 
 	private void FixedUpdate()
 	{
 		IsGrounded = WasGrounded();
-		DoFlip();
 	}
 
 	private void OnEnable()
@@ -63,10 +60,5 @@ public class Player : MonoBehaviour
 		bool isGroundHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _groundMask).Length > 0;
 		bool isEnemyHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _enemyMask).Length > 0;
 		return isEnemyHere || isGroundHere;
-	}
-
-	private void DoFlip()
-	{
-		_faceFliper.Flip(_keyDetect.GetMoveVector().x);
 	}
 }

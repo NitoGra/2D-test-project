@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(FaceFliper))]
 public class KeyDetect : MonoBehaviour
 {
 	private const KeyCode JumpKey = KeyCode.Space;
@@ -8,17 +9,24 @@ public class KeyDetect : MonoBehaviour
 	private const KeyCode AttackKey = KeyCode.F;
 	private const string Horizontal = "Horizontal";
 
-	private Vector2 _moveVector = new Vector2();
+	private Vector2 _moveVector = new();
 	private bool _isSit = false;
 	private bool _isAttack = false;
 	private bool _isRun = false;
 	private bool _isJump = false;
+
+	private FaceFliper _faceFliper;
 
 	public event Action Siting;
 	public event Action Jumping;
 	public event Action Runing;
 	public event Action Idleing;
 	public event Action Attacking;
+
+	private void Start()
+	{
+		_faceFliper = GetComponent<FaceFliper>();
+	}
 
 	private void Update()
 	{
@@ -85,6 +93,7 @@ public class KeyDetect : MonoBehaviour
 		if (_moveVector.x != 0)
 		{
 			Runing?.Invoke();
+			DoFlip();
 			_isRun = true;
 		}
 
@@ -103,6 +112,11 @@ public class KeyDetect : MonoBehaviour
 		_isSit = false;
 		_isRun = false;
 		_isJump = false;
+	}
+
+	private void DoFlip()
+	{
+		_faceFliper.Flip(_moveVector.x);
 	}
 
 	public Vector2 GetMoveVector() => _moveVector;
