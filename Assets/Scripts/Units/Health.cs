@@ -15,8 +15,6 @@ public class Health : MonoBehaviour
 
 	public void TakeDamage(float damage)
 	{
-		print(damage);
-
 		if (damage > 0)
 		{
 			_value -= damage;
@@ -32,7 +30,7 @@ public class Health : MonoBehaviour
 
 	}
 
-	public void Healing(float healing)
+	public void TakeHeal(float healing)
 	{
 		if (healing > 0)
 			_value += healing;

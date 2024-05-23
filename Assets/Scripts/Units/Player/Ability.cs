@@ -13,7 +13,7 @@ public class Ability : MonoBehaviour
 	[SerializeField] private KeyDetect _keyDetect;
 
 	private Health _health;
-	private Coroutine _activeCast;
+	private Coroutine _activeCast = null;
 	private WaitForSecondsRealtime _castDelay;
 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
 
@@ -69,11 +69,11 @@ public class Ability : MonoBehaviour
 	{
 		foreach (Collider2D collidersHit in collidersHits)
 		{
-			if (collidersHit.TryGetComponent<Enemy>(out Enemy enemy) == false)
+			if (collidersHit.TryGetComponent<Enemy>(out Enemy enemy))
 			{
 				Health health = enemy.GetComponent<Health>();
 				health.TakeDamage(_value);
-				_health.Healing(_value);
+				_health.TakeHeal(_value);
 			}
 		}
 	}
