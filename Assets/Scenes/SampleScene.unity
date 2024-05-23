@@ -1500,7 +1500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6494b830a0dee947aa2c2f1f7c57f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 1
+  _value: 6
   _delay: 0.5
   _actionTime: 6
   _range: {fileID: 1627404834}
