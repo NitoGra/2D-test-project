@@ -20,18 +20,18 @@ public class PlayerAudio : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_health.Damaging += DamageSound;
+		_health.Damaged += DamageSound;
 		_health.Died += DeadSound;
-		_attack.PlayHitSound += HitSound;
-		_attack.PlayMissSound += MissSound;
+		_attack.HitSoundPlayed += HitSound;
+		_attack.MissSoundPlayed += MissSound;
 	}
 
 	private void OnDisable()
 	{
-		_health.Damaging -= DamageSound;
+		_health.Damaged -= DamageSound;
 		_health.Died -= DeadSound;
-		_attack.PlayHitSound -= HitSound;
-		_attack.PlayMissSound -= MissSound;
+		_attack.HitSoundPlayed -= HitSound;
+		_attack.MissSoundPlayed -= MissSound;
 	}
 
 	private void DamageSound()

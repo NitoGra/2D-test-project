@@ -4,9 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Mover), typeof(Health))]
 public class Player : MonoBehaviour
 {
-	private const float MinSpeed = 1.0f;
-	private const float MaxSpeed = 100.0f;
-
 	[Range(MinSpeed, MaxSpeed)]
 	[SerializeField] private float _speed;
 	[Range(MinSpeed, MaxSpeed)]
@@ -17,6 +14,9 @@ public class Player : MonoBehaviour
 	[SerializeField] private LayerMask _enemyMask;
 	[SerializeField] private CircleCollider2D _groundTrigger;
 	[SerializeField] private KeyDetect _keyDetect;
+
+	private const float MinSpeed = 1.0f;
+	private const float MaxSpeed = 100.0f;
 
 	private Mover _mover;
 
@@ -34,25 +34,25 @@ public class Player : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_keyDetect.Jumping += Jump;
-		_keyDetect.Runing += Run;
+		_keyDetect.Jumped += Jump;
+		_keyDetect.Runned += Run;
 	}
 
 	private void OnDisable()
 	{
-		_keyDetect.Jumping -= Jump;
-		_keyDetect.Runing -= Run;
+		_keyDetect.Jumped -= Jump;
+		_keyDetect.Runned -= Run;
 	}
 
 	private void Run()
 	{
-		_mover.HorizontalMove(_speed * _speedMultiplier * _keyDetect.GetMoveVector());
+		_mover.MoveHorizontal(_speed * _speedMultiplier * _keyDetect.GetMoveVector());
 	}
 
 	private void Jump()
 	{
 		if (IsGrounded)
-			_mover.ImpulseMove(transform.up * _jumpSpeed);
+			_mover.MoveImpulse(transform.up * _jumpSpeed);
 	}
 
 	private bool WasGrounded()

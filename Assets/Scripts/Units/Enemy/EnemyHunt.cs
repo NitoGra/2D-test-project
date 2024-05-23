@@ -12,6 +12,9 @@ public class EnemyHunt : MonoBehaviour
 	[SerializeField] private float _huntSpeed;
 	[SerializeField] private Health _health;
 
+	public event Action AttackOrdered;
+	public event Action LoseTargetOrdered;
+
 	private int _huntDistance;
 	private float _huntRemembersCount = 0;
 	private float _timerToAttack = 0;
@@ -26,9 +29,6 @@ public class EnemyHunt : MonoBehaviour
 	private FaceFliper _faceFliper;
 	private GameObject _target;
 
-	public event Action AttackOrdered;
-	public event Action LoseTargetOrdered;
-
 	private void Start()
 	{
 		_enemy = GetComponent<Enemy>();
@@ -37,13 +37,13 @@ public class EnemyHunt : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_health.Damaging += GetHit;
+		_health.Damaged += GetHit;
 		LoseTargetOrdered += LoseTarget;
 	}
 
 	private void OnDisable()
 	{
-		_health.Damaging -= GetHit;
+		_health.Damaged -= GetHit;
 		LoseTargetOrdered -= LoseTarget;
 	}
 

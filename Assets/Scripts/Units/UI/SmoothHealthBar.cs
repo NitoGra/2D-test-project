@@ -1,10 +1,8 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class SmoothHealthBar : BaseHealth
+public class SmoothHealthBar : BaseHealthBar
 {
-	[SerializeField] private Slider _healthBar;
 	[SerializeField] private float _step;
 
 	private Coroutine _healthChanger;
@@ -13,8 +11,8 @@ public class SmoothHealthBar : BaseHealth
 
 	protected override void ChangeBar()
 	{
-		float health = Health.GetHealth;
-		float maxHealth = Health.GetMaxHealth;
+		float health = GetValue;
+		float maxHealth = GetMax;
 		float healthValue = health / maxHealth;
 
 		if (_healthChanger != null)
@@ -25,9 +23,9 @@ public class SmoothHealthBar : BaseHealth
 
 	private IEnumerator SlmoothChange(float healthValue)
 	{
-		while (_healthBar.value != healthValue)
+		while (Value != healthValue)
 		{
-			_healthBar.value = Mathf.MoveTowards(_healthBar.value, healthValue, _step * Time.deltaTime);
+			SetValue(Mathf.MoveTowards(Value, healthValue, _step * Time.deltaTime));
 			yield return null;
 		}
 

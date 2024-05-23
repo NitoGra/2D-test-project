@@ -10,12 +10,12 @@ public class Mover : MonoBehaviour
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 	}
 
-	public void HorizontalMove(Vector2 xVelocity)
+	public void MoveHorizontal(Vector2 xVelocity)
 	{
 		_rigidbody2D.AddForce(xVelocity, ForceMode2D.Force);
 	}
 
-	public void ImpulseMove(Vector2 impulseDirection)
+	public void MoveImpulse(Vector2 impulseDirection)
 	{
 		_rigidbody2D.AddForce(impulseDirection, ForceMode2D.Impulse);
 	}

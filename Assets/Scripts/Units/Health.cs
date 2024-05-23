@@ -3,41 +3,43 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-	[SerializeField] private int _maxHealth;
-	[SerializeField] private int _health;
-
-	public int GetMaxHealth => _maxHealth;
-	public int GetHealth => _health;
+	[SerializeField] private float _maxValue;
+	[SerializeField] private float _value;
 
 	public event Action Died;
-	public event Action Damaging;
-	public event Action TakeHealing;
+	public event Action Damaged;
+	public event Action Healed;
 
-	public void TakeDamage(int damage)
+	public float GetMax => _maxValue;
+	public float GetValue => _value;
+
+	public void TakeDamage(float damage)
 	{
+		print(damage);
+
 		if (damage > 0)
 		{
-			_health -= damage;
+			_value -= damage;
 
-			if (_health <= 0)
+			if (_value <= 0)
 			{
-				_health = 0;
+				_value = 0;
 				Died?.Invoke();
 			}
 
-			Damaging?.Invoke();
+			Damaged?.Invoke();
 		}
 
 	}
 
-	public void Healing(int healing)
+	public void Healing(float healing)
 	{
 		if (healing > 0)
-			_health += healing;
+			_value += healing;
 
-		if (_health > _maxHealth)
-			_health = _maxHealth;
+		if (_value > _maxValue)
+			_value = _maxValue;
 
-		TakeHealing?.Invoke();
+		Healed?.Invoke();
 	}
 }

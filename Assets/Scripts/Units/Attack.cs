@@ -11,14 +11,14 @@ public class Attack : MonoBehaviour
 	[SerializeField] private Collider2D _damageCollider;
 	[SerializeField] private float _attackEndDelay;
 
+	public event Action HitSoundPlayed;
+	public event Action MissSoundPlayed;
+
 	private PlayerAudio _audio;
 	private bool _isAudioPlaying;
 	private bool _playHitSound;
 	private Collider2D _colliderIgnore;
 	private ContactFilter2D _contactFilter2D = new ContactFilter2D().NoFilter();
-
-	public event Action PlayHitSound;
-	public event Action PlayMissSound;
 
 	private void Start()
 	{
@@ -67,9 +67,9 @@ public class Attack : MonoBehaviour
 	private void PlaySound()
 	{
 		if (_playHitSound)
-			PlayHitSound?.Invoke();
+			HitSoundPlayed?.Invoke();
 		else
-			PlayMissSound?.Invoke();
+			MissSoundPlayed?.Invoke();
 
 		_playHitSound = false;
 	}

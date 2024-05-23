@@ -3,15 +3,15 @@ using UnityEngine;
 [RequireComponent(typeof(Animator), typeof(Enemy), typeof(Health))]
 public class EnemyAnimator : MonoBehaviour
 {
-	private static readonly int EnemyDead = Animator.StringToHash(nameof(EnemyDead));
-	private static readonly int EnemyWalk = Animator.StringToHash(nameof(EnemyWalk));
-	private static readonly int EnemyAttack = Animator.StringToHash(nameof(EnemyAttack));
-
 	[SerializeField] private EnemyHunt _hunt;
 	[SerializeField] private Animator _animator;
 	[SerializeField] private Health _health;
 	[SerializeField] private Attack _attack;
 	[SerializeField] private float _deathDelay;
+
+	private static readonly int EnemyDead = Animator.StringToHash(nameof(EnemyDead));
+	private static readonly int EnemyWalk = Animator.StringToHash(nameof(EnemyWalk));
+	private static readonly int EnemyAttack = Animator.StringToHash(nameof(EnemyAttack));
 
 	private void OnEnable()
 	{
