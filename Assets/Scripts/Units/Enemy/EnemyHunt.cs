@@ -73,7 +73,7 @@ public class EnemyHunt : MonoBehaviour
 	{
 		while (_timerToAttack < _attackDelay)
 		{
-			if(_target != null)
+			if (_target != null)
 				_lastTargetPosition = _target.transform.position;
 
 			_timerToAttack++;

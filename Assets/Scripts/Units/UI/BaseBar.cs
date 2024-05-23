@@ -16,5 +16,5 @@ public class BaseHealth : MonoBehaviour
 		Health.Damaging -= ChangeBar;
 	}
 
-	protected virtual void ChangeBar(){}
+	protected virtual void ChangeBar() { }
 }
