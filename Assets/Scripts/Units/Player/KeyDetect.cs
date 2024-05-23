@@ -4,24 +4,25 @@ using UnityEngine;
 [RequireComponent(typeof(FaceFliper))]
 public class KeyDetect : MonoBehaviour
 {
+	public event Action Sitted;
+	public event Action Jumped;
+	public event Action Runned;
+	public event Action Idled;
+	public event Action Attacked;
+	public event Action AbilityUsed;
+
 	private const KeyCode JumpKey = KeyCode.Space;
 	private const KeyCode SitKey = KeyCode.S;
 	private const KeyCode AttackKey = KeyCode.F;
+	private const KeyCode AbilityKey = KeyCode.E;
 	private const string Horizontal = "Horizontal";
 
-	private Vector2 _moveVector = new();
 	private bool _isSit = false;
 	private bool _isAttack = false;
 	private bool _isRun = false;
 	private bool _isJump = false;
-
+	private Vector2 _moveVector = new();
 	private FaceFliper _faceFliper;
-
-	public event Action Siting;
-	public event Action Jumping;
-	public event Action Runing;
-	public event Action Idleing;
-	public event Action Attacking;
 
 	private void Start()
 	{
@@ -47,6 +48,8 @@ public class KeyDetect : MonoBehaviour
 	{
 		if (TryAttack())
 			return;
+		else if (TryAbility())
+			return;
 		else if (TrySit())
 			return;
 		else if (TryRun())
@@ -59,7 +62,7 @@ public class KeyDetect : MonoBehaviour
 	{
 		if (Input.GetKeyDown(JumpKey))
 		{
-			Jumping?.Invoke();
+			Jumped?.Invoke();
 			_isJump = true;
 		}
 
@@ -70,7 +73,7 @@ public class KeyDetect : MonoBehaviour
 	{
 		if (Input.GetKey(AttackKey))
 		{
-			Attacking?.Invoke();
+			Attacked?.Invoke();
 			_isAttack = true;
 		}
 
@@ -81,8 +84,18 @@ public class KeyDetect : MonoBehaviour
 	{
 		if (Input.GetKey(SitKey))
 		{
-			Siting?.Invoke();
+			Sitted?.Invoke();
 			_isSit = true;
+		}
+
+		return _isSit;
+	}
+
+	private bool TryAbility()
+	{
+		if (Input.GetKey(AbilityKey))
+		{
+			AbilityUsed?.Invoke();
 		}
 
 		return _isSit;
@@ -92,7 +105,7 @@ public class KeyDetect : MonoBehaviour
 	{
 		if (_moveVector.x != 0)
 		{
-			Runing?.Invoke();
+			Runned?.Invoke();
 			DoFlip();
 			_isRun = true;
 		}
@@ -103,7 +116,7 @@ public class KeyDetect : MonoBehaviour
 	private void TryIdle()
 	{
 		if ((_isRun && _isAttack && _isSit && _isJump) == false)
-			Idleing?.Invoke();
+			Idled?.Invoke();
 	}
 
 	private void MakeNormalState()
