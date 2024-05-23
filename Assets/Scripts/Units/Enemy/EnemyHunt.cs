@@ -28,6 +28,7 @@ public class EnemyHunt : MonoBehaviour
 	private Enemy _enemy;
 	private FaceFliper _faceFliper;
 	private GameObject _target;
+	private bool _isAlive = true;
 
 	private void Start()
 	{
@@ -38,19 +39,24 @@ public class EnemyHunt : MonoBehaviour
 	private void OnEnable()
 	{
 		_health.Damaged += GetHit;
+		_health.Died+= Die;
 		LoseTargetOrdered += LoseTarget;
 	}
 
 	private void OnDisable()
 	{
 		_health.Damaged -= GetHit;
+		_health.Died -= Die;
 		LoseTargetOrdered -= LoseTarget;
 	}
 
 	private void FixedUpdate()
 	{
-		FoundTarget();
-		MoveToTarget();
+		if (_isAlive)
+		{
+			FoundTarget();
+			MoveToTarget();
+		}
 	}
 
 	private void FoundTarget()
@@ -68,6 +74,8 @@ public class EnemyHunt : MonoBehaviour
 				_targetLose = StartCoroutine(RememberTarget());
 		}
 	}
+
+	private void Die() => _isAlive = false;
 
 	private IEnumerator AttackTarget()
 	{
