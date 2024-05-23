@@ -1441,7 +1441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3328df0fd8cd6ca47badeceb8465bc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxValue: 20
+  _maxValue: 100
   _value: 20
 --- !u!114 &755333631
 MonoBehaviour:
@@ -1500,7 +1500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6494b830a0dee947aa2c2f1f7c57f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 6
+  _value: 3
   _delay: 0.5
   _actionTime: 6
   _range: {fileID: 1627404834}
@@ -2868,8 +2868,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3328df0fd8cd6ca47badeceb8465bc3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxValue: 40
-  _value: 40
+  _maxValue: 50
+  _value: 50
 --- !u!114 &1136863726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3736,7 +3736,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
 --- !u!1 &1631374541
 GameObject:
   m_ObjectHideFlags: 0
