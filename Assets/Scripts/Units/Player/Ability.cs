@@ -25,15 +25,15 @@ public class Ability : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_keyDetect.AbilityUsed += DefaultAbility;
+		_keyDetect.AbilityUsed += Activate;
 	}
 
 	private void OnDisable()
 	{
-		_keyDetect.AbilityUsed -= DefaultAbility;
+		_keyDetect.AbilityUsed -= Activate;
 	}
 
-	private void DefaultAbility()
+	private void Activate()
 	{
 		if (_activeCast != null)
 			return;

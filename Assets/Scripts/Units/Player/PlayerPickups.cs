@@ -23,7 +23,7 @@ public class PlayerPickups : MonoBehaviour
 	private void TakeMedicBag(MedicBag medicBag)
 	{
 		medicBag.Pickup(_audio, _audio.GetMedicBagSound);
-		_health.Healing((int)medicBag.Value);
+		_health.Healing(medicBag.Value);
 	}
 
 	private void TakeCoin(Coin coin)

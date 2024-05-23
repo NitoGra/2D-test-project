@@ -18,10 +18,10 @@ public class SmoothHealthBar : BaseHealthBar
 		if (_healthChanger != null)
 			BreakCorutine();
 
-		_healthChanger = StartCoroutine(SlmoothChange(healthValue));
+		_healthChanger = StartCoroutine(ChangeSmooth(healthValue));
 	}
 
-	private IEnumerator SlmoothChange(float healthValue)
+	private IEnumerator ChangeSmooth(float healthValue)
 	{
 		while (Value != healthValue)
 		{

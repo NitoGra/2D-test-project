@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		IsGrounded = WasGrounded();
+		IsGrounded = TryFindGround();
 	}
 
 	private void OnEnable()
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 			_mover.MoveImpulse(transform.up * _jumpSpeed);
 	}
 
-	private bool WasGrounded()
+	private bool TryFindGround()
 	{
 		bool isGroundHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _groundMask).Length > 0;
 		bool isEnemyHere = Physics2D.OverlapCircleAll(_groundTrigger.transform.position, _groundTrigger.radius, _enemyMask).Length > 0;
